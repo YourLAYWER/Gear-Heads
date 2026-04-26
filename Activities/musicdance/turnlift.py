@@ -12,7 +12,7 @@ right_motor = Motor(Port.C)
 lift_motor = Motor(Port.A)
 line_sensor = ColorSensor(Port.S3)
 
-# Your specific calibrated dimensions
+# calibrated dimensions
 robot = DriveBase(left_motor, right_motor, 56, 121)
 ev3.speaker.set_volume(100)
 
