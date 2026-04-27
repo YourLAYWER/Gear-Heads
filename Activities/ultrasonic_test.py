@@ -1,0 +1,134 @@
+#!/usr/bin/env pybricks-micropython
+"""
+Demonstrates interactive Color Sensor calibration and implements a basic 
+Proportional (P) control loop to follow the edge of a line.
+"""
+
+# =============================================================================
+# IMPORTS AND SETUP
+# =============================================================================
+
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import Motor, ColorSensor, GyroSensor, UltrasonicSensor
+from pybricks.parameters import Port
+from pybricks.robotics import DriveBase
+from pybricks.tools import wait
+
+ev3 = EV3Brick()
+
+left_motor = Motor(Port.B)
+right_motor = Motor(Port.C)
+
+# The ColorSensor outputs a reflection value between 0 (dark) and 100 (light).
+line_sensor = ColorSensor(Port.S3)
+
+robot = DriveBase(left_motor, right_motor, 56, 121)
+
+ultrasonic = UltrasonicSensor(Port.S4)
+
+gyro_sensor= GyroSensor(Port.S1)
+
+
+####################### Here is where my code starts ############################
+DRIVE_SPEED = 2
+TARGET_DISTANCE = 15
+SPEED_GAIN = 2
+
+COLOR_GAIN = 1.6
+THRESHOLD = 5
+WIDTH = 400
+LENGTH = 500
+
+def measure_grey():
+    ev3.screen.clear()
+    ev3.screen.draw_text(0,20, "Place on Black")
+    ev3.screen.draw_text(0,50, "Press any button")
+    while len(ev3.buttons.pressed()) == 0:
+        wait(10)
+    
+    black = line_sensor.reflection()
+
+    ev3.screen.clear()
+    ev3.screen.draw_text(0,20, "Place on White")
+    ev3.screen.draw_text(0,50, "Press any button")
+    while len(ev3.buttons.pressed()) == 0:
+        wait(10)
+    
+    white = line_sensor.reflection()
+
+    #Calculating the grey area/ THRESHOLD
+    value = (black+white)/2
+
+    # Display results
+    ev3.screen.clear()
+    ev3.screen.draw_text(0, 10, "Blk: " + str(black))
+    ev3.screen.draw_text(0, 30, "Wht: " + str(white))
+    ev3.screen.draw_text(0, 60, "Thr: " + str(value))
+
+    return value
+
+def arc_search(max_angle=180,speed=20):
+    ev3.speaker.beep()
+    ev3.screen.clear()
+    ev3.screen.draw_text(0, 50, "Searching for line...")
+    gyro_sensor.reset_angle(0)
+    robot.drive(0, speed)
+    
+    while line_sensor.reflection() > THRESHOLD and abs(gyro_sensor.angle()) < max_angle:
+        wait(5)
+        
+    robot.stop()
+    
+    if line_sensor.reflection() <= THRESHOLD:
+        wait(5)
+        return True
+    else:
+        return False
+
+
+def avoid_obsticle(width=400, length=500):
+    ev3.speaker.beep()
+    ev3.screen.clear()
+    ev3.screen.draw_text(0, 50, "Avoiding Obsticle...")
+    robot.turn(90)
+    robot.straight(width)
+    robot.turn(-90)
+    robot.straight(length)
+    robot.turn(-90)
+    robot.straight(width+(width*0.15))
+    robot.turn(90)
+    wait(5)
+    
+def drive_robot(max_speed=35):
+    ev3.speaker.beep()
+    ev3.screen.clear()
+    ev3.screen.draw_text(0, 50, "Following Line...")
+    while True:
+        current_distance = ultrasonic.distance()
+        error = current_distance - TARGET_DISTANCE
+        drive_speed = error * SPEED_GAIN
+        
+        current_reflection = line_sensor.reflection()
+        color_error = current_reflection - THRESHOLD
+        steering = color_error * COLOR_GAIN
+        
+        if current_distance < TARGET_DISTANCE+2:
+            avoid_obsticle()
+            
+            found = arc_search()
+            
+            if not found:
+                robot.stop()
+                break
+            continue
+        
+        if drive_speed > max_speed:
+            drive_speed = max_speed
+        
+        robot.drive(drive_speed, steering)
+        wait(3)
+        
+
+THRESHOLD = measure_grey()
+
+drive_robot()
