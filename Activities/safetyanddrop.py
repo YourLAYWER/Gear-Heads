@@ -67,7 +67,6 @@ def main():
             while abs(gyro.angle()) < 90:#while less than 90 always check during turning
                 wait(1)
             robot.stop()
-            robot.straight(700)
             continue 
 
         # Check for End of Line (Dropping off onto pure white floor)
