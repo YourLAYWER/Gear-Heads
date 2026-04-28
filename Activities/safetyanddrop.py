@@ -12,7 +12,7 @@ right_motor = Motor(Port.C)
 lift_motor = Motor(Port.A)
 line_sensor = ColorSensor(Port.S3)
 ultrasonic = UltrasonicSensor(Port.S4)
-gyro = GyroSensor(Port.S2)
+gyro = GyroSensor(Port.S1)
 robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=121)
 
 def main():
