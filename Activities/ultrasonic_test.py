@@ -99,7 +99,7 @@ def avoid_obsticle(width=400, length=500):
     robot.turn(90)
     wait(5)
     
-def drive_robot(max_speed=35):
+def drive_robot(max_speed=40):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Following Line...")
@@ -128,7 +128,27 @@ def drive_robot(max_speed=35):
         robot.drive(drive_speed, steering)
         wait(3)
         
+ev3.screen.clear()
+ev3.screen.draw_text(0,20, "Place on Black")
+ev3.screen.draw_text(0,50, "Press any button")
+while len(ev3.buttons.pressed()) == 0:
+    wait(10)
+    
+black_value = line_sensor.reflection()
 
-THRESHOLD = measure_grey()
+ev3.screen.clear()
+ev3.screen.draw_text(0, 20, "Place on WHITE")
+ev3.screen.draw_text(0, 50, "Press any btn")
+while len(ev3.buttons.pressed()) == 0:
+    wait(10)
+
+white_value = line_sensor.reflection()
+
+while len(ev3.buttons.pressed()) > 0:
+    wait(10)
+
+THRESHOLD = (black_value + white_value) / 2
+
+ev3.speaker.beep(1000, 200)
 
 drive_robot()

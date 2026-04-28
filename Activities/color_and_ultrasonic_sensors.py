@@ -52,7 +52,7 @@ def measure_black():
 
 
 
-def arc_search(max_angle=180,speed=5):
+def arc_search(max_angle=180,speed=20):
     gyro_sensor.reset_angle(0)
     robot.drive(0, speed)
     
@@ -73,7 +73,7 @@ def avoid_obsticle(width, length):
     robot.turn(-90)
     robot.straight(length)
     robot.turn(-90)
-    robot.straight(width-(width*0.3))
+    robot.straight(width+(width*0.15))
     robot.turn(90)
     
 def drive_robot(width,length):
