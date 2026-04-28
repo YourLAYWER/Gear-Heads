@@ -24,30 +24,28 @@ except:
     # If file is missing, beep so you know the script is running
     ev3.speaker.beep()
 
-# --- 2. TRIGGER LOGIC (Pattern-Safe) ---
 ev3.screen.draw_text(0, 40, "PLACE ON WHITE")
 
-# We use 40 as a 'Safe White' trigger. 
-# It's bright enough to be white, but won't be blocked by light lines.
-while line_sensor.reflection() < 40:
+# 
+while line_sensor.reflection() < 30:
     wait(10)
 
-# --- 3. DANCE (From raise.py and turn_360.py) ---
+# (From raise.py and turn_360.py)
 ev3.screen.clear()
 ev3.screen.draw_text(0, 40, "DANCING!")
-lift_motor.reset_angle(0)
+lift_motor.reset_angle(0)#You are standing at angle 0. 
 
 # We use a loop of 5 to ensure it doesn't shut down if the music file fails
-for i in range(5):
-    # Raise (Target 110 from raise.py)
+for i in range(5):#Repeat process 5 times
+    # (Target 110 from raise.py)
     # wait=False allows lifting and turning at the same time
-    lift_motor.run_target(150, 110, wait=False) 
+    lift_motor.run_target(150, 110, wait=False)#Raise to 110 at 150 speed.
     
-    # Turn 360 (From turn_360.py)
+    #(From turn_360.py)
     robot.turn(360) 
     
-    # Lower (Target 0 from lower.py)
-    lift_motor.run_target(150, 0)
+    #(Target 0 from lower.py)
+    lift_motor.run_target(150, 0)#Lower at 150 speed
     
     # Pause for stability (From turn_360.py)
     wait(1000)
