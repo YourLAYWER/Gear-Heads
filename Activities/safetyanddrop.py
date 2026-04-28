@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 #!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
+=======
+#!/usr/bin/env pybricks-micropython
+from pybricks.hubs import EV3Brick
+>>>>>>> 8abdeaa2500370e4de54e673a028c27d116f27a4
 from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor,GyroSensor
 from pybricks.parameters import Port
 from pybricks.robotics import DriveBase
@@ -28,35 +33,77 @@ def main():
     # 2. CALIBRATION (Teaching the robot your Black and White)
     # =========================================================================
     ev3.screen.clear()
-    ev3.screen.draw_text(0, 20, "Place on BLACK") # This is your Black line
-    while len(ev3.buttons.pressed()) == 0: wait(10)
-    black_value = line_sensor.reflection() 
-    ev3.speaker.beep(500, 200)
-    while len(ev3.buttons.pressed()) > 0: wait(10)
+ev3.screen.draw_text(0, 20, "Place on BLACK")
+ev3.screen.draw_text(0, 50, "Press any btn")
 
-    ev3.screen.clear()
-    ev3.screen.draw_text(0, 20, "Place on WHITE") # This is your white Floor
-    while len(ev3.buttons.pressed()) == 0: wait(10)
-    white_value = line_sensor.reflection()
-    ev3.speaker.beep(1000, 200)
-    while len(ev3.buttons.pressed()) > 0: wait(10)
+# 1. Wait for user to place the robot and press a button
+# ev3.buttons.pressed() returns a collection of pressed buttons. 
+# We loop and do nothing (wait) as long as no buttons are being pressed.
+while len(ev3.buttons.pressed()) == 0:
+    wait(10)
+    
+# Take the reading (e.g., might return 12)
+black_value = line_sensor.reflection()
 
-    # Calculate the Threshold Edge
-    TARGET_THRESHOLD = (black_value + white_value) / 2
+ev3.speaker.beep(500, 200)
 
-    # =========================================================================
-    # 3. SETTINGS & LINE FOLLOWING
-    # =========================================================================
-    DRIVE_SPEED = 100 
-    PROPORTIONAL_GAIN = 1.4#Steering wheel sensitivity
+# Debounce: Wait for the user to let go of the button before moving to step 2
+while len(ev3.buttons.pressed()) > 0:
+    wait(10)
 
+ev3.screen.clear()
+ev3.screen.draw_text(0, 20, "Place on WHITE")
+ev3.screen.draw_text(0, 50, "Press any btn")
+
+# 2. Wait for user to place the robot on white and press a button
+while len(ev3.buttons.pressed()) == 0:
+    wait(10)
+    
+# Take the reading (e.g., might return 88)
+white_value = line_sensor.reflection()
+
+ev3.speaker.beep(1000, 200)
+
+# Debounce again
+while len(ev3.buttons.pressed()) > 0:
+    wait(10)
+
+# 3. Calculate the Target Threshold
+# We want to follow the *edge* of the line, meaning the sensor should be 
+# hovering exactly halfway between the black line and the white floor.
+TARGET_THRESHOLD = (black_value + white_value) / 2
+
+# Display results
+ev3.screen.clear()
+ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
+ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
+ev3.screen.draw_text(0, 60, "Thr: " + str(TARGET_THRESHOLD))
+
+print("Calibration Complete. Threshold:", TARGET_THRESHOLD)
+wait(3000) 
+
+
+# =============================================================================
+# PROPORTIONAL (P) CONTROL LOOP
+# =============================================================================
+
+# DRIVE_SPEED is constant. The robot always moves forward at 100 mm/s.
+DRIVE_SPEED = 100       
+
+# PROPORTIONAL_GAIN dictates how aggressively the robot turns to fix an error.
+# If the robot "wobbles" too violently, lower this number. 
+# If it is too sluggish and loses the line on a curve, raise this number.
+PROPORTIONAL_GAIN = 1.2 
+
+ev3.speaker.beep()
+ev3.screen.clear()
+ev3.screen.draw_text(0, 50, "Following Line...")
     # ev3.screen.clear()
-    ev3.screen.draw_text(0, 40, "PLACE ON EDGE")
     # ev3.speaker.beep(1500, 500)
     # wait(2000) # Give you 2 seconds to place it on the edge before it moves
     
 
-    while True:
+while True:
         current_reflection = line_sensor.reflection()
         # Check for 90-Degree Turn (Detecting the crossing line)
         if current_reflection < (black_value + 5):#If see anything darker
@@ -73,7 +120,7 @@ def main():
         if current_reflection > (white_value - 2):#If it is pure white stop
             robot.stop()
             break 
-        
+
         # C. Proportional Steering(Ensures that it stays on the line instead of woobling)
         error = current_reflection - TARGET_THRESHOLD
         steering = error * PROPORTIONAL_GAIN
@@ -83,8 +130,8 @@ def main():
     # =========================================================================
     # 4. FINAL DROP
     # =========================================================================
-    lift_motor.run_target(200, 0)
-    ev3.speaker.say("Mission complete")
+lift_motor.run_target(200, 0)
+ev3.speaker.say("Mission complete")
 
 if __name__ == "__main__":
     main()

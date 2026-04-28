@@ -31,10 +31,10 @@ gyro_sensor= GyroSensor(Port.S1)
 
 ####################### Here is where my code starts ############################
 DRIVE_SPEED = 2
-TARGET_DISTANCE = 15
-SPEED_GAIN = 2
+TARGET_DISTANCE = 200
+SPEED_GAIN = 1.8
 
-COLOR_GAIN = 1.6
+COLOR_GAIN = 1.3
 THRESHOLD = 5
 WIDTH = 400
 LENGTH = 500
@@ -67,7 +67,7 @@ def measure_grey():
 
     return value
 
-def arc_search(max_angle=180,speed=20):
+def arc_search(max_angle=180,speed=50):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Searching for line...")
@@ -99,7 +99,7 @@ def avoid_obsticle(width=400, length=500):
     robot.turn(90)
     wait(5)
     
-def drive_robot(max_speed=40):
+def drive_robot(max_speed=60):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Following Line...")
@@ -108,11 +108,12 @@ def drive_robot(max_speed=40):
         error = current_distance - TARGET_DISTANCE
         drive_speed = error * SPEED_GAIN
         
+
         current_reflection = line_sensor.reflection()
         color_error = current_reflection - THRESHOLD
         steering = color_error * COLOR_GAIN
         
-        if current_distance < TARGET_DISTANCE+2:
+        if current_distance < TARGET_DISTANCE+20:
             avoid_obsticle()
             
             found = arc_search()
@@ -120,13 +121,15 @@ def drive_robot(max_speed=40):
             if not found:
                 robot.stop()
                 break
-            continue
+            else:
+                continue
+            
         
         if drive_speed > max_speed:
             drive_speed = max_speed
         
         robot.drive(drive_speed, steering)
-        wait(3)
+        wait(10)
         
 ev3.screen.clear()
 ev3.screen.draw_text(0,20, "Place on Black")
@@ -150,5 +153,7 @@ while len(ev3.buttons.pressed()) > 0:
 THRESHOLD = (black_value + white_value) / 2
 
 ev3.speaker.beep(1000, 200)
+
+wait(3000) 
 
 drive_robot()
