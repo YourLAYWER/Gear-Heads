@@ -54,7 +54,7 @@ def main():
     ev3.screen.draw_text(0, 40, "PLACE ON EDGE")
     ev3.speaker.beep(1500, 500)
     wait(2000) # Give you 2 seconds to place it on the edge before it moves
-    robot.straight(300)#Drives for 30cm to get on track
+    robot.straight(700)#Drives for 100cm to get on track
 
     while True:
         current_reflection = line_sensor.reflection()
@@ -67,7 +67,7 @@ def main():
             while abs(gyro.angle()) < 90:#while less than 90 always check during turning
                 wait(1)
             robot.stop()
-            robot.straight(60)
+            robot.straight(700)
             continue 
 
         # Check for End of Line (Dropping off onto pure white floor)
