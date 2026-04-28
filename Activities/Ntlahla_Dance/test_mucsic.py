@@ -11,3 +11,5 @@ ev3 = EV3Brick()
 
 try: 
     ev3.speaker.play_file("music.mp3")
+except:
+    ev3.screen.draw_text(20, 50, "Eish")

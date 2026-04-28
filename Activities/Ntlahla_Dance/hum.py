@@ -11,25 +11,38 @@ from pybricks.tools import wait
 
 ev3 = EV3Brick()
 
-# ---------------------------------------------------------
+#--------------------
+# MUSIC SETUP
+#--------------------
+
+try: 
+    ev3.speaker.play_file("music.mp3, wait=False")
+except:
+    ev3.speaker.beep()
+
 # MOTOR SETUP 
-# ---------------------------------------------------------
 left_leg = Motor(Port.B)
 right_leg = Motor(Port.C)
-arm_motor = Motor(Port.A)  
+right_arm = Motor(Port.A)  
 left_arm = Motor(Port.D)
 
-# ---------------------------------------------------------
+#------------
 # COUNTDOWN
-# ---------------------------------------------------------
+#---------------
+
 def countdown():
     for _ in range(3):
         ev3.speaker.beep()
         wait(500)
 
-# ---------------------------------------------------------
+#-------------------
 # DANCE MOVES
-# ---------------------------------------------------------
+#----------------------
+
+# Stretch
+def stretch():
+    left_leg.run_angle(200, 120, wait=False)
+    right_leg.run_angle(200, -120)
 
 # Step left
 def step_left():
@@ -48,14 +61,20 @@ def bounce():
     left_leg.run_angle(400, -45, wait=False)
     right_leg.run_angle(400, -45)
 
-# Arm swing
-def arm_swing():
-    arm_motor.run_angle(400, 180)
-    arm_motor.run_angle(400, -180)
+# Right arm swing
+def right_arm_swing():
+    right_arm.run_angle(400, 180)
+    right_arm.run_angle(400, -180)
 
+# Left arm swing
 def left_arm_swing():
     left_arm.run_angle(400, 180)
     left_arm.run_angle(400, -180)
+
+# Move back to initial position
+def reset_initial_position():
+    left_leg.run_back(300,0, wait=False)
+    right_leg.run_back(300,0,wait=False)
 
 # ---------------------------------------------------------
 # START
@@ -64,13 +83,15 @@ def left_arm_swing():
 ev3.screen.clear()
 ev3.screen.draw_text(20, 50, "Ready!")
 
-wait(2000)
+wait(400)
 countdown()
 
+# Eyes
 ev3.screen.clear()
 ev3.screen.draw_circle(40, 50, 10)
 ev3.screen.draw_circle(90, 50, 10)
 
+# Eyes pupils
 ev3.screen.draw_circle(40, 50, 5, fill=True)
 ev3.screen.draw_circle(90, 50, 5, fill= True)
 
@@ -78,6 +99,12 @@ ev3.screen.draw_circle(90, 50, 5, fill= True)
 # MAIN LOOP
 # ---------------------------------------------------------
 while True:
+
+    stretch()
+    wait(300)
+    
+    reset_initial_position()
+    wait(300)
 
     step_left()
     wait(300)
@@ -88,7 +115,7 @@ while True:
     bounce()
     wait(200)
 
-    arm_swing()
+    right_arm_swing()
     wait(200)
 
     left_arm_swing()
