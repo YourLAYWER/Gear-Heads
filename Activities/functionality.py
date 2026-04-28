@@ -14,25 +14,26 @@ from pybricks.tools import wait
 DRIVE_SPEED = 30     
 PROPORTIONAL_GAIN = 1.8 #Determines wobbliness/sluggishness of the bot.
 
+#Variables
+gyro = GyroSensor(Port.S1)
+line_sensor = ColorSensor(Port.S3)
+lift_motor = Motor(Port.A)
+left_motor = Motor(Port.B)
+right_motor = Motor(Port.C)
+
 #First block of code is intended to reset and initialise the bot itself.
 
 ev3 = EV3Brick()
 '''
-gyro = GyroSensor(Port.S1)
 gyro.reset_angle(0)
 print(gyro.angle())
 wait(1000)
 '''
-
-left_motor = Motor(Port.B)
-right_motor = Motor(Port.C)
-
-print("Start")
+#print("Start")
 
 ##INITIALISATION STARTS
 
 #Prep & initialise the color sensor.
-line_sensor = ColorSensor(Port.S3)
 robot = DriveBase(left_motor, right_motor, 56, 121) 
 
 #Set Black
@@ -70,18 +71,17 @@ ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
 ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
 ev3.screen.draw_text(0, 60, "Thr: " + str(TARGET_THRESHOLD))
 ev3.screen.clear()
-ev3.screen.draw_text("Calibration Complete. Threshold: ", TARGET_THRESHOLD)
+#ev3.screen.draw_text("Calibration Complete. Threshold: ", TARGET_THRESHOLD)
 wait(3000) 
 
 ev3.screen.clear()
-ev3.screen.draw_text("Got here lol")
+#ev3.screen.draw_text("Got here lol")
 
 ##INITIALISATION DONE
 
-ev3.screen.draw_text("Lowering the bar")
+#ev3.screen.draw_text("Lowering the bar")
 
 #Lower the bar 100% 
-lift_motor = Motor(Port.A)
 lift_motor.run_target(100, -1)
 
 #Next block follows the line forward until the end.(Using color sensor)
@@ -93,10 +93,9 @@ error = current_reflection - TARGET_THRESHOLD
 steering = error * PROPORTIONAL_GAIN
 robot.drive(DRIVE_SPEED, steering)
 wait(50)
-ev3.screen.draw_text("Time to TOW!")
+#ev3.screen.draw_text("Time to TOW!")
 
 #Raise the bar 100%
-lift_motor = Motor(Port.A)
 lift_motor.reset_angle(0)
 lift_motor.run_target(100, 110)
 
@@ -104,7 +103,7 @@ lift_motor.run_target(100, 110)
 #Kinematic setup for accuracy first.
 wheel_diameter = 56      
 axle_track = 121      
-robot = DriveBase(left_motor, right_motor, wheel_diameter, axle_track)
+
 
 #Actual movement
 ev3.speaker.beep()
@@ -125,10 +124,9 @@ error = current_reflection - TARGET_THRESHOLD
 steering = error * PROPORTIONAL_GAIN
 robot.drive(DRIVE_SPEED, steering)
 wait(50)
-ev3.screen.draw_text("Drop off time.")
+#ev3.screen.draw_text("Drop off time.")
 
 #Lower the bar 100%
-lift_motor = Motor(Port.A)
 lift_motor.run_target(100, -1)
 
 #Implementation of victory sound will follow. Still yet to find a sound to use.
