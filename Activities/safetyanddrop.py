@@ -1,10 +1,7 @@
-<<<<<<< HEAD
+
 #!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
-=======
-#!/usr/bin/env pybricks-micropython
-from pybricks.hubs import EV3Brick
->>>>>>> 6974ab22f2939e6ab35b5bfd974d040b5a6fca58
+
 from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor,GyroSensor
 from pybricks.parameters import Port
 from pybricks.robotics import DriveBase
