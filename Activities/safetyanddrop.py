@@ -50,11 +50,11 @@ def main():
     DRIVE_SPEED = 100 
     PROPORTIONAL_GAIN = 1.4#Steering wheel sensitivity
 
-    ev3.screen.clear()
+    # ev3.screen.clear()
     ev3.screen.draw_text(0, 40, "PLACE ON EDGE")
-    ev3.speaker.beep(1500, 500)
-    wait(2000) # Give you 2 seconds to place it on the edge before it moves
-    robot.straight(700)#Drives for 100cm to get on track
+    # ev3.speaker.beep(1500, 500)
+    # wait(2000) # Give you 2 seconds to place it on the edge before it moves
+    
 
     while True:
         current_reflection = line_sensor.reflection()
