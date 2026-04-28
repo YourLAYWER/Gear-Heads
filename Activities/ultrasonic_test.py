@@ -31,7 +31,7 @@ gyro_sensor= GyroSensor(Port.S1)
 
 ####################### Here is where my code starts ############################
 DRIVE_SPEED = 2
-TARGET_DISTANCE = 200
+TARGET_DISTANCE = 150
 SPEED_GAIN = 1.8
 
 COLOR_GAIN = 1.3
@@ -86,7 +86,7 @@ def arc_search(max_angle=180,speed=50):
         return False
 
 
-def avoid_obsticle(width=400, length=500):
+def avoid_obsticle(width=200, length=350):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Avoiding Obsticle...")
@@ -114,8 +114,9 @@ def drive_robot(max_speed=60):
         steering = color_error * COLOR_GAIN
         
         if current_distance < TARGET_DISTANCE+20:
+            wait(2000)
             avoid_obsticle()
-            
+            wait(2000)
             found = arc_search()
             
             if not found:
