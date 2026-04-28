@@ -32,8 +32,8 @@ def countdown():
 
 # Stretch
 def stretch():
-#     left_leg.run_angle(200, 120, wait=False)
-    right_leg.run_angle(200, -120)
+    left_leg.run_angle(200, 120, wait=False)
+    # right_leg.run_angle(200, -120)
 
 # Step left
 def step_left():
@@ -78,20 +78,21 @@ wait(400)
 countdown()
 
 # Eyes
-ev3.screen.clear()
-ev3.screen.draw_circle(100, 50, 10)
-ev3.screen.draw_circle(100, 50, 10)
+# ev3.screen.clear()
+# ev3.screen.draw_circle(40, 50, 50)
+# ev3.screen.draw_circle(40, 50, 50)
 
 # # Eyes pupils
-# ev3.screen.draw_circle(190, 100, 10, fill=True)
+# ev3.screen.draw_circle(90, 100, 10, fill=True)
 # ev3.screen.draw_circle(190, 100, 10, fill= True)
 
 #--------------------
 # MUSIC SETUP
 #--------------------
-
-ev3.speaker.play_file("music.wav, wait=False")
-
+try:
+    ev3.speaker.play_file("music.wav, wait=False")
+except:
+    ev3.screen.draw_text("Will stop")
 # ---------------------------------------------------------
 # MAIN LOOP
 # ---------------------------------------------------------
