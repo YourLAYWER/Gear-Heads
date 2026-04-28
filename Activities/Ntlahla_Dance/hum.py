@@ -11,15 +11,6 @@ from pybricks.tools import wait
 
 ev3 = EV3Brick()
 
-#--------------------
-# MUSIC SETUP
-#--------------------
-
-# try: 
-#     ev3.speaker.play_file("music.mp3, wait=False")
-# except:
-#     ev3.speaker.beep()
-
 # MOTOR SETUP 
 left_leg = Motor(Port.B)
 right_leg = Motor(Port.C)
@@ -88,12 +79,21 @@ countdown()
 
 # Eyes
 ev3.screen.clear()
-ev3.screen.draw_circle(40, 50, 10)
-ev3.screen.draw_circle(90, 50, 10)
+ev3.screen.draw_circle(200, 210, 160)
+ev3.screen.draw_circle(200, 210, 160)
 
 # Eyes pupils
-ev3.screen.draw_circle(40, 50, 5, fill=True)
-ev3.screen.draw_circle(90, 50, 5, fill= True)
+ev3.screen.draw_circle(190, 100, 10, fill=True)
+ev3.screen.draw_circle(190, 100, 10, fill= True)
+
+#--------------------
+# MUSIC SETUP
+#--------------------
+
+try: 
+    ev3.speaker.play_file("music.mp3, wait=False")
+except:
+    ev3.speaker.beep()
 
 # ---------------------------------------------------------
 # MAIN LOOP
