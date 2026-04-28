@@ -79,12 +79,12 @@ countdown()
 
 # Eyes
 ev3.screen.clear()
-ev3.screen.draw_circle(200, 210, 160)
-ev3.screen.draw_circle(200, 210, 160)
+ev3.screen.draw_circle(100, 50, 10)
+ev3.screen.draw_circle(100, 50, 10)
 
-# Eyes pupils
-ev3.screen.draw_circle(190, 100, 10, fill=True)
-ev3.screen.draw_circle(190, 100, 10, fill= True)
+# # Eyes pupils
+# ev3.screen.draw_circle(190, 100, 10, fill=True)
+# ev3.screen.draw_circle(190, 100, 10, fill= True)
 
 #--------------------
 # MUSIC SETUP
