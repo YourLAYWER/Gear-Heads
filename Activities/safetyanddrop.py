@@ -126,6 +126,7 @@ while True:
     # 4. FINAL DROP
     # =========================================================================
 lift_motor.run_target(200, 0)
+
 ev3.speaker.say("Mission complete")
 
 if __name__ == "__main__":
