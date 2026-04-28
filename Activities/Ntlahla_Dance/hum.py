@@ -31,9 +31,9 @@ def countdown():
 #----------------------
 
 # Stretch
-# def stretch():
+def stretch():
 #     left_leg.run_angle(200, 120, wait=False)
-#     right_leg.run_angle(200, -120)
+    right_leg.run_angle(200, -120)
 
 # Step left
 def step_left():
@@ -90,18 +90,15 @@ ev3.screen.draw_circle(190, 100, 10, fill= True)
 # MUSIC SETUP
 #--------------------
 
-try: 
-    ev3.speaker.play_file("music.mp3, wait=False")
-except:
-    ev3.speaker.beep()
+ev3.speaker.play_file("music.wav, wait=False")
 
 # ---------------------------------------------------------
 # MAIN LOOP
 # ---------------------------------------------------------
 while True:
 
-    # stretch()
-    # wait(300)
+    stretch()
+    wait(300)
     
     # reset_initial_position()
     # wait(300)

@@ -50,11 +50,11 @@ def main():
     DRIVE_SPEED = 100 
     PROPORTIONAL_GAIN = 1.4#Steering wheel sensitivity
 
-    ev3.screen.clear()
+    # ev3.screen.clear()
     ev3.screen.draw_text(0, 40, "PLACE ON EDGE")
-    ev3.speaker.beep(1500, 500)
-    wait(2000) # Give you 2 seconds to place it on the edge before it moves
-    robot.straight(700)#Drives for 100cm to get on track
+    # ev3.speaker.beep(1500, 500)
+    # wait(2000) # Give you 2 seconds to place it on the edge before it moves
+    
 
     while True:
         current_reflection = line_sensor.reflection()
@@ -67,14 +67,13 @@ def main():
             while abs(gyro.angle()) < 90:#while less than 90 always check during turning
                 wait(1)
             robot.stop()
-            robot.straight(700)
             continue 
 
         # Check for End of Line (Dropping off onto pure white floor)
         if current_reflection > (white_value - 2):#If it is pure white stop
             robot.stop()
             break 
-
+        
         # C. Proportional Steering(Ensures that it stays on the line instead of woobling)
         error = current_reflection - TARGET_THRESHOLD
         steering = error * PROPORTIONAL_GAIN
