@@ -28,8 +28,8 @@ def main():
     # 2. CALIBRATION (Teaching the robot your Black and White)
     # =========================================================================
     ev3.screen.clear()
-ev3.screen.draw_text(0, 20, "Place on BLACK")
-ev3.screen.draw_text(0, 50, "Press any btn")
+    ev3.screen.draw_text(0, 20, "Place on BLACK")
+    ev3.screen.draw_text(0, 50, "Press any btn")
 
 # 1. Wait for user to place the robot and press a button
 # ev3.buttons.pressed() returns a collection of pressed buttons. 
@@ -88,7 +88,7 @@ DRIVE_SPEED = 100
 # PROPORTIONAL_GAIN dictates how aggressively the robot turns to fix an error.
 # If the robot "wobbles" too violently, lower this number. 
 # If it is too sluggish and loses the line on a curve, raise this number.
-PROPORTIONAL_GAIN = 1.2 
+PROPORTIONAL_GAIN = 1.4 
 
 ev3.speaker.beep()
 ev3.screen.clear()
@@ -101,15 +101,15 @@ ev3.screen.draw_text(0, 50, "Following Line...")
 while True:
         current_reflection = line_sensor.reflection()
         # Check for 90-Degree Turn (Detecting the crossing line)
-        if current_reflection < (black_value + 5):#If see anything darker
-            robot.stop()
-            ev3.speaker.beep()
-            gyro.reset_angle(0)
-            robot.drive(0, 40) # rotation speed of 40
-            while abs(gyro.angle()) < 90:#while less than 90 always check during turning
-                wait(1)
-            robot.stop()
-            continue 
+        # if current_reflection < (black_value + 5):#If see anything darker
+        #     robot.stop()
+        #     ev3.speaker.beep()
+        #     gyro.reset_angle(0)
+        #     robot.drive(0, 40) # rotation speed of 40
+        #     while abs(gyro.angle()) < 90:#while less than 90 always check during turning
+        #         wait(1)
+        #     robot.stop()
+        #     continue 
 
         # Check for End of Line (Dropping off onto pure white floor)
         if current_reflection > (white_value - 2):#If it is pure white stop
