@@ -24,6 +24,7 @@ right_motor = Motor(Port.C)
 #First block of code is intended to reset and initialise the bot itself.
 
 ev3 = EV3Brick()
+
 '''
 gyro.reset_angle(0)
 print(gyro.angle())
@@ -34,36 +35,40 @@ wait(1000)
 ##INITIALISATION STARTS
 
 #Prep & initialise the color sensor.
-robot = DriveBase(left_motor, right_motor, 56, 121) 
+def set_color():
+    robot = DriveBase(left_motor, right_motor, 56, 121) 
 
-#Set Black
-ev3.screen.clear()
-ev3.screen.draw_text(0, 20, "Place on BLACK")
-ev3.screen.draw_text(0, 50, "Press any btn") 
-while len(ev3.buttons.pressed()) == 0:
-    wait(10)
-black_value = line_sensor.reflection()
-ev3.speaker.beep(500, 200)
+    #Set Black
+    ev3.screen.clear()
+    ev3.screen.draw_text(0, 20, "Place on BLACK")
+    ev3.screen.draw_text(0, 50, "Press any btn") 
+    while len(ev3.buttons.pressed()) == 0:
+        wait(10)
+    black_value = line_sensor.reflection()
+    ev3.speaker.beep(500, 200)
 
-#Debounce command follows, ensures that the user isn't pressing anything
-while len(ev3.buttons.pressed()) > 0:  
-    wait(10)
+    #Debounce command follows, ensures that the user isn't pressing anything
+    while len(ev3.buttons.pressed()) > 0:  
+        wait(10)
 
-#Set White
-ev3.screen.clear()
-ev3.screen.draw_text(0, 20, "Place on WHITE")
-ev3.screen.draw_text(0, 50, "Press any btn")
-while len(ev3.buttons.pressed()) == 0:
-    wait(10)
-white_value = line_sensor.reflection()
-ev3.speaker.beep(1000, 200)
+    #Set White
+    ev3.screen.clear()
+    ev3.screen.draw_text(0, 20, "Place on WHITE")
+    ev3.screen.draw_text(0, 50, "Press any btn")
+    while len(ev3.buttons.pressed()) == 0:
+        wait(10)
+    white_value = line_sensor.reflection()
+    ev3.speaker.beep(1000, 200)
 
-#Debounce again
-while len(ev3.buttons.pressed()) > 0:
-    wait(10)
+    #Debounce again
+    while len(ev3.buttons.pressed()) > 0:
+        wait(10)
 
-#Calculations for initialization
-TARGET_THRESHOLD = (black_value + white_value) / 2
+    #Calculations for initialization
+    TARGET_THRESHOLD = (black_value + white_value) / 2
+
+
+
 
 # Display results
 ev3.screen.clear()
