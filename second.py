@@ -8,7 +8,7 @@ from pybricks.parameters import Port
 # Initialize the EV3 Brick.
 ev3 = EV3Brick()
 
-# Initialize a motor at port B.
+# Initialize a motor at port B and C.
 left_motor = Motor(Port.B)
 right_motor = Motor(Port.C)
 # Write your program here

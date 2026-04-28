@@ -18,7 +18,8 @@ PROPORTIONAL_GAIN = 1.8 #Determines wobbliness/sluggishness of the bot.
 gyro = GyroSensor(Port.S1)
 line_sensor = ColorSensor(Port.S3)
 lift_motor = Motor(Port.A)
-
+left_motor = Motor(Port.B)
+right_motor = Motor(Port.C)
 
 #First block of code is intended to reset and initialise the bot itself.
 
@@ -28,11 +29,7 @@ gyro.reset_angle(0)
 print(gyro.angle())
 wait(1000)
 '''
-
-left_motor = Motor(Port.B)
-right_motor = Motor(Port.C)
-
-print("Start")
+#print("Start")
 
 ##INITIALISATION STARTS
 
@@ -69,6 +66,7 @@ while len(ev3.buttons.pressed()) > 0:
 TARGET_THRESHOLD = (black_value + white_value) / 2
 
 # Display results
+ev3.screen.clear()
 ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
 ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
 ev3.screen.draw_text(0, 60, "Thr: " + str(TARGET_THRESHOLD))
