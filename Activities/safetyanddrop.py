@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 #!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
-=======
-#!/usr/bin/env pybricks-micropython
-from pybricks.hubs import EV3Brick
->>>>>>> 8abdeaa2500370e4de54e673a028c27d116f27a4
 from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor,GyroSensor
 from pybricks.parameters import Port
 from pybricks.robotics import DriveBase
@@ -131,6 +126,7 @@ while True:
     # 4. FINAL DROP
     # =========================================================================
 lift_motor.run_target(200, 0)
+
 ev3.speaker.say("Mission complete")
 
 if __name__ == "__main__":
