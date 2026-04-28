@@ -1,6 +1,6 @@
 #!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor
+from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor,GyroSensor
 from pybricks.parameters import Port
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait
@@ -12,7 +12,7 @@ right_motor = Motor(Port.C)
 lift_motor = Motor(Port.A)
 line_sensor = ColorSensor(Port.S3)
 ultrasonic = UltrasonicSensor(Port.S4)
-
+gyro = GyroSensor(Port.S1)
 robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=121)
 
 def main():
@@ -48,40 +48,37 @@ def main():
     # 3. SETTINGS & LINE FOLLOWING
     # =========================================================================
     DRIVE_SPEED = 100 
-    PROPORTIONAL_GAIN = 1.4 
-    SAFE_DISTANCE = 2
+    PROPORTIONAL_GAIN = 1.4#Steering wheel sensitivity
 
     ev3.screen.clear()
     ev3.screen.draw_text(0, 40, "PLACE ON EDGE")
     ev3.speaker.beep(1500, 500)
     wait(2000) # Give you 2 seconds to place it on the edge before it moves
+    robot.straight(300)#Drives for 30cm to get on track
 
     while True:
-        # A. Safety Check
-        if ultrasonic.distance() < SAFE_DISTANCE:
-            robot.stop()
-            while ultrasonic.distance() < SAFE_DISTANCE: wait(100)
-
-        # B. Navigation
         current_reflection = line_sensor.reflection()
-
         # Check for 90-Degree Turn (Detecting the crossing line)
-        if current_reflection < (black_value + 5):
+        if current_reflection < (black_value + 5):#If see anything darker
             robot.stop()
-            robot.turn(90) # Adjust to -90 if the turn is to the left
-            wait(500)
+            ev3.speaker.beep()
+            gyro.reset_angle(0)
+            robot.drive(0, 40) # rotation speed of 40
+            while abs(gyro.angle()) < 90:#while less than 90 always check during turning
+                wait(1)
+            robot.stop()
+            robot.straight(60)
             continue 
 
         # Check for End of Line (Dropping off onto pure white floor)
-        if current_reflection > (white_value - 2):
+        if current_reflection > (white_value - 2):#If it is pure white stop
             robot.stop()
             break 
 
-        # C. Proportional Steering
+        # C. Proportional Steering(Ensures that it stays on the line instead of woobling)
         error = current_reflection - TARGET_THRESHOLD
         steering = error * PROPORTIONAL_GAIN
-        robot.drive(DRIVE_SPEED, steering)
-        
+        robot.drive(DRIVE_SPEED, steering)#Drive at 100 while doing steering calc.
         wait(10)
 
     # =========================================================================
