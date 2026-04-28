@@ -73,7 +73,7 @@ def main():
         if current_reflection > (white_value - 2):#If it is pure white stop
             robot.stop()
             break 
-
+        
         # C. Proportional Steering(Ensures that it stays on the line instead of woobling)
         error = current_reflection - TARGET_THRESHOLD
         steering = error * PROPORTIONAL_GAIN
