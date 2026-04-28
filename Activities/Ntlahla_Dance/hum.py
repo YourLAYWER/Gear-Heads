@@ -90,7 +90,7 @@ countdown()
 # MUSIC SETUP
 #--------------------
 try:
-    ev3.speaker.play_file("music.wav")
+    ev3.speaker.play_file("music.wav", wait=False)
 except:
     ev3.screen.draw_text(20, 30, "Will stop")
 # ---------------------------------------------------------
