@@ -145,20 +145,25 @@ ev3.screen.clear()
 ev3.screen.draw_text(0,20, "Place on Black")
 ev3.screen.draw_text(0,50, "Press any button")
 while len(ev3.buttons.pressed()) == 0:
-    wait(10)
+    wait(5)
     
 black_value = line_sensor.reflection()
+
+while len(ev3.buttons.pressed()) > 0:
+    wait(10)
+ev3.speaker.beep()
 
 ev3.screen.clear()
 ev3.screen.draw_text(0, 20, "Place on WHITE")
 ev3.screen.draw_text(0, 50, "Press any btn")
 while len(ev3.buttons.pressed()) == 0:
-    wait(10)
+    wait(5)
 
 white_value = line_sensor.reflection()
 
 while len(ev3.buttons.pressed()) > 0:
     wait(10)
+ev3.speaker.beep()
 
 THRESHOLD = (black_value + white_value) / 2  
 
