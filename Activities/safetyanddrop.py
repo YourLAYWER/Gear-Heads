@@ -3,7 +3,7 @@ from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, ColorSensor, GyroSensor
 from pybricks.parameters import Port
 from pybricks.robotics import DriveBase
-from pybricks.tools import wait
+from pybricks.tools import wait,StopWatch
 
 # =============================================================================
 # 1. SETUP & INITIALIZATION
@@ -67,15 +67,17 @@ wait(2000)
 # =============================================================================
 # 4. INTEGRATED P-CONTROL LOOP
 # =============================================================================
-DRIVE_SPEED = 100       
+DRIVE_SPEED = 60       
 PROPORTIONAL_GAIN = 1.2#steering sensitivity
-
+RUN_TIME_MS = 19220
 ev3.speaker.beep()
 ev3.screen.clear()
 ev3.screen.draw_text(0, 50, "Following Line...")
-
+timer = StopWatch()
 while True:
     # Get current sensor reading
+    if timer.time() > RUN_TIME_MS:
+        break
     current_reflection = line_sensor.reflection()
 
     # Standard behavior: Move forward or search for line
@@ -83,34 +85,34 @@ while True:
     robot.drive(150, 0) 
 
     # 3. The "Black Line Detected" Trigger
-    if current_reflection < (black_value + 5):
+    #if current_reflection < (black_value + 5):
         # Stop and notify
-        robot.stop()
-        ev3.speaker.beep()
+        #robot.stop()
+        #ev3.speaker.beep()
         
         # --- TURN 90 DEGREES ---
-        wait(50)             # Pause for stability
-        gyro.reset_angle(0)  # Set current position as 0
-        wait(50)             # Ensure reset is registered
+        #wait(50)             # Pause for stability
+        #gyro.reset_angle(0)  # Set current position as 0
+        #wait(50)             # Ensure reset is registered
         
-        robot.drive(0, 40)   # Start rotating at 40 degrees per second
+        #robot.drive(0, 40)   # Start rotating at 40 degrees per second
         
         # Monitor the gyro until it hits 90 degrees
-        while abs(gyro.angle()) < 90:
-            wait(10)
+        #while abs(gyro.angle()) < 90:
+            #wait(10)
             
-        robot.stop()         # Stop the rotation
+        #robot.stop()         # Stop the rotation
         
         # --- MOVE FORWARD ---
         # 300mm = 30cm. Change to 3000 for 3 meters.
-        robot.straight(300) 
+        #robot.straight(300) 
         
         # Go back to the top of the loop to start fresh
-        continue
+        #continue
     #Detect End of Line (Pure White Floor)
-    if current_reflection > (white_value - 2):
-        robot.stop()
-        break # Exit loop to reach Final Drop
+    #if current_reflection > (white_value - 2):
+        #robot.stop()
+        #break # Exit loop to reach Final Drop
 
     #Calculate Error
     error = current_reflection - TARGET_THRESHOLD
