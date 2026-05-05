@@ -83,6 +83,7 @@ while True:
     robot.drive(150, 0) 
 
     # 3. The "Black Line Detected" Trigger
+    '''
     if current_reflection < (black_value + 5):
         # Stop and notify
         robot.stop()
@@ -107,11 +108,12 @@ while True:
         
         # Go back to the top of the loop to start fresh
         continue
+    
     #Detect End of Line (Pure White Floor)
     if current_reflection > (white_value - 2):
         robot.stop()
         break # Exit loop to reach Final Drop
-
+        '''
     #Calculate Error
     error = current_reflection - TARGET_THRESHOLD
     
