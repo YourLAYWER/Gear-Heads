@@ -75,24 +75,38 @@ ev3.screen.clear()
 ev3.screen.draw_text(0, 50, "Following Line...")
 
 while True:
-    #Check current sensor reading
+    # Get current sensor reading
     current_reflection = line_sensor.reflection()
-    
-    #Detect 90-Degree Turn (Crossing Line)
+
+    # Standard behavior: Move forward or search for line
+    # (Insert your line-following logic here, for example:)
+    robot.drive(150, 0) 
+
+    # 3. The "Black Line Detected" Trigger
     if current_reflection < (black_value + 5):
+        # Stop and notify
         robot.stop()
         ev3.speaker.beep()
-        # Turn 90 degrees using Gyro
-        gyro.reset_angle(0)
-        robot.drive(0, 40) # Rotation speed
-        while abs(gyro.angle()) < 90:
-            wait(1)
-        robot.stop()
-        #robot.straight(300)
         
-        # Resume loop from the top to find the line again
-        continue 
-
+        # --- TURN 90 DEGREES ---
+        wait(50)             # Pause for stability
+        gyro.reset_angle(0)  # Set current position as 0
+        wait(50)             # Ensure reset is registered
+        
+        robot.drive(0, 40)   # Start rotating at 40 degrees per second
+        
+        # Monitor the gyro until it hits 90 degrees
+        while abs(gyro.angle()) < 90:
+            wait(10)
+            
+        robot.stop()         # Stop the rotation
+        
+        # --- MOVE FORWARD ---
+        # 300mm = 30cm. Change to 3000 for 3 meters.
+        robot.straight(300) 
+        
+        # Go back to the top of the loop to start fresh
+        continue
     #Detect End of Line (Pure White Floor)
     if current_reflection > (white_value - 2):
         robot.stop()
