@@ -58,7 +58,7 @@ while True:
         robot.stop()
         ev3.speaker.beep()
 
-        robot.straight(80)
+        robot.straight(40)
 
         lower_lever()
         wait(500)
