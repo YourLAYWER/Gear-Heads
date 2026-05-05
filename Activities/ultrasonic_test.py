@@ -10,7 +10,7 @@ Proportional (P) control loop to follow the edge of a line.
 
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, ColorSensor, GyroSensor, UltrasonicSensor
-from pybricks.parameters import Port
+from pybricks.parameters import Port, Color
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait
 
@@ -99,12 +99,19 @@ def avoid_obstacle(width=200, length=300):
     robot.turn(90)
     wait(2000)
     
-def drive_robot(max_speed=65):
+def drive_robot(max_speed=65,red_value):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Following Line...")
     ev3.speaker.say("starting self driving procedure")
     while True:
+
+        if line_sensor.distance() == Color.RED:
+            robot.stop()
+            ev3.speaker.say("Mission complete")
+            break
+
+
         current_distance = ultrasonic.distance()
         error = current_distance - TARGET_DISTANCE
         drive_speed = error * SPEED_GAIN
@@ -153,6 +160,8 @@ while len(ev3.buttons.pressed()) > 0:
     wait(10)
 ev3.speaker.beep()
 
+
+# measure white
 ev3.screen.clear()
 ev3.screen.draw_text(0, 20, "Place on WHITE")
 ev3.screen.draw_text(0, 50, "Press any btn")
@@ -165,15 +174,28 @@ while len(ev3.buttons.pressed()) > 0:
     wait(10)
 ev3.speaker.beep()
 
+ev3.screen.clear()
+ev3.screen.draw_text(0, 20, "Place on Red")
+ev3.screen.draw_text(0, 50, "Press any btn")
+while len(ev3.buttons.pressed()) == 0:
+    wait(5)
+
+red_value = line_sensor.reflection()
+
+while len(ev3.buttons.pressed()) > 0:
+    wait(10)
+ev3.speaker.beep()
+
 THRESHOLD = (black_value + white_value) / 2  
 
 # Display results
 ev3.screen.clear()
 ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
 ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
+ev3.screen.draw_text(0, 30, "Red: " + str(red_value))
 ev3.screen.draw_text(0, 60, "Thr: " + str(THRESHOLD))
 
 ev3.speaker.beep(1000, 200)  # end of THRESHOLD calculation
 print("calibration complete")
 wait(5)
-drive_robot()
+drive_robot(red_value)
