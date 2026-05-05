@@ -95,7 +95,7 @@ def lift_down():
 
 def color_move(distance_covered):    
     while True:
-        if(distance_covered == 1100):
+        if(distance_covered == 1105):
             break
         ev3.screen.draw_text(0, 50, "Following Line...")
         current_reflection = line_sensor.reflection()
