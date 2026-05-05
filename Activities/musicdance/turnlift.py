@@ -19,10 +19,10 @@ ev3.speaker.set_volume(100)
 # --- 1. START MUSIC ---
 try:
     # Start music immediately
-    ev3.speaker.play_file('118.wav', wait=False)
+    ev3.speaker.play_file("118.wav")
 except:
     # If file is missing, beep so you know the script is running
-    ev3.speaker.beep()
+    ev3.screen.draw_text(20, 50, "Eish")
 
 ev3.screen.draw_text(0, 40, "PLACE ON WHITE")
 
