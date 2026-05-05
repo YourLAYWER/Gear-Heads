@@ -16,7 +16,7 @@ lift_motor = Motor(Port.A)
 
 # Sensors
 line_sensor = ColorSensor(Port.S3)
-gyro = GyroSensor(Port.S4)
+gyro = GyroSensor(Port.S1)
 
 # Robot Dimensions (Wheel Diameter: 56mm, Axle Track: 121mm)
 robot = DriveBase(left_motor, right_motor, 56, 121)
