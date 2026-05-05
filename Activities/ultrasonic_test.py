@@ -86,7 +86,7 @@ def arc_search(max_angle=180,speed=50):
         return False
 
 
-def avoid_obsticle(width=200, length=300):
+def avoid_obstacle(width=200, length=300):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Avoiding Obsticle...")
@@ -119,10 +119,11 @@ def drive_robot(max_speed=65):
             robot.stop()
             ev3.speaker.say("Obsticle Detected")
             wait(1000)
+            current_distance = ultrasonic.distance()
             if current_distance < TARGET_DISTANCE+10:
 
                 ev3.speaker.say("Initiating Obsticle avoidance procedure")
-                avoid_obsticle()
+                avoid_obstacle()
                 wait(2000)
                 found = arc_search()
             
@@ -161,20 +162,14 @@ while len(ev3.buttons.pressed()) > 0:
 
 THRESHOLD = (black_value + white_value) / 2  
 
+# Display results
+ev3.screen.clear()
+ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
+ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
+ev3.screen.draw_text(0, 60, "Thr: " + str(THRESHOLD))
+
 ev3.speaker.beep(1000, 200)  # end of THRESHOLD calculation
 
-wait(1000) 
-
-###################### start self driving procedure ###############################
-# ev3.screen.clear()
-# ev3.screen.draw_text(0,50, "Press any button to Start Self Driving Procedure")
-# while len(ev3.buttons.pressed()) == 0:
-#     wait(10)
-######################### end of start procedure  ################################
-
-
-
-############### 100mm start to prevent the rollback #############################
-# robot.straight(100)
+wait(3000) 
 
 drive_robot()
