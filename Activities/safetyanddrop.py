@@ -82,13 +82,15 @@ while True:
     if current_reflection < (black_value + 5):
         robot.stop()
         ev3.speaker.beep()
-        
         # Turn 90 degrees using Gyro
+        wait(50)
         gyro.reset_angle(0)
+        wait(50)
         robot.drive(0, 40) # Rotation speed
         while abs(gyro.angle()) < 90:
-            wait(1)
+            wait(10)
         robot.stop()
+        robot.straight(300)
         
         # Resume loop from the top to find the line again
         continue 
