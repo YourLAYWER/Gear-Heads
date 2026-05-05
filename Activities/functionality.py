@@ -10,7 +10,7 @@ from pybricks.robotics import DriveBase
 
 #Constants First
 DRIVE_SPEED = 30  #Measured in mm/s   
-PROPORTIONAL_GAIN = 1.8 #Determines wobbliness/sluggishness of the bot.
+PROPORTIONAL_GAIN = 0.8 #Determines wobbliness/sluggishness of the bot.
 LIFT_UP_ANGLE = 90     # The absolute angle representing the "up" position
 LIFT_DOWN_ANGLE = 0    # The absolute angle representing the "down" position
 
@@ -96,9 +96,7 @@ def lift_down():
 def color_move(distance_covered):    
     while True:
         if(distance_covered == 1500):
-            break      
-        ev3.speaker.beep()
-        ev3.screen.clear()
+            break
         ev3.screen.draw_text(0, 50, "Following Line...")
         current_reflection = line_sensor.reflection()
         error = current_reflection - TARGET_THRESHOLD
@@ -133,7 +131,6 @@ ev3.speaker.beep(1000, 200)
 #Debounce again
 while len(ev3.buttons.pressed()) > 0:
     wait(10)
-return black_value, white_value
 
 #Calculations for initialization
 TARGET_THRESHOLD = (black_value + white_value) / 2
@@ -153,8 +150,8 @@ lift_motor.reset_angle(0)
 lift_down()
 
 #Move toward the car
-move(1000)
-distance_covered += 1000
+move(900)
+distance_covered += 900
 
 #Raise the bar 100%
 ev3.screen.draw_text(0, 30, "Raising The bar")
@@ -162,10 +159,9 @@ lift_up()
 
 #Turn Towards the road
 turn(-90)
-distance_covered +- 90
+distance_covered += 90
 
 #Next block follows the line forward until the end.(Using color sensor)
-
 
 color_move(distance_covered)
 
