@@ -86,7 +86,7 @@ def arc_search(max_angle=180,speed=50):
         return False
 
 
-def avoid_obsticle(width=200, length=350):
+def avoid_obsticle(width=200, length=300):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Avoiding Obsticle...")
@@ -97,12 +97,13 @@ def avoid_obsticle(width=200, length=350):
     robot.turn(-90)
     robot.straight(width+(width*0.15))
     robot.turn(90)
-    wait(5)
+    wait(2000)
     
-def drive_robot(max_speed=60):
+def drive_robot(max_speed=65):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Following Line...")
+    ev3.speaker.speak("starting self driving procedure").wait(3)
     while True:
         current_distance = ultrasonic.distance()
         error = current_distance - TARGET_DISTANCE
@@ -113,17 +114,23 @@ def drive_robot(max_speed=60):
         color_error = current_reflection - THRESHOLD
         steering = color_error * COLOR_GAIN
         
-        if current_distance < TARGET_DISTANCE+20:
-            wait(2000)
-            avoid_obsticle()
-            wait(2000)
-            found = arc_search()
+        if current_distance < TARGET_DISTANCE+10:
+
+            robot.stop()
+            ev3.speaker.say("Obsticle Detected")
+            wait(1000)
+            if current_distance < TARGET_DISTANCE+10:
+
+                ev3.speaker.say("Initiating Obsticle avoidance procedure")
+                avoid_obsticle()
+                wait(2000)
+                found = arc_search()
             
-            if not found:
-                robot.stop()
-                break
-            else:
-                continue
+                if not found:
+                    robot.stop()
+                    break
+                else:
+                    continue
             
         
         if drive_speed > max_speed:
@@ -131,7 +138,8 @@ def drive_robot(max_speed=60):
         
         robot.drive(drive_speed, steering)
         wait(10)
-        
+
+####################### this code is for calculating the THRESHOLD ##########################      
 ev3.screen.clear()
 ev3.screen.draw_text(0,20, "Place on Black")
 ev3.screen.draw_text(0,50, "Press any button")
@@ -151,10 +159,22 @@ white_value = line_sensor.reflection()
 while len(ev3.buttons.pressed()) > 0:
     wait(10)
 
-THRESHOLD = (black_value + white_value) / 2
+THRESHOLD = (black_value + white_value) / 2  
 
-ev3.speaker.beep(1000, 200)
+ev3.speaker.beep(1000, 200)  # end of THRESHOLD calculation
 
-wait(3000) 
+wait(1000) 
+
+###################### start self driving procedure ###############################
+ev3.screen.clear()
+    ev3.screen.draw_text(0,50, "Press any button to Start Self Driving Procedure")
+    while len(ev3.buttons.pressed()) == 0:
+        wait(10)
+######################### end of start procedure  ################################
+
+
+
+############### 100mm start to prevent the rollback #############################
+robot.straight(100)
 
 drive_robot()
