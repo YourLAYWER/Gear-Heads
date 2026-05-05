@@ -167,9 +167,9 @@ wait(1000)
 
 ###################### start self driving procedure ###############################
 ev3.screen.clear()
-    ev3.screen.draw_text(0,50, "Press any button to Start Self Driving Procedure")
-    while len(ev3.buttons.pressed()) == 0:
-        wait(10)
+ev3.screen.draw_text(0,50, "Press any button to Start Self Driving Procedure")
+while len(ev3.buttons.pressed()) == 0:
+    wait(10)
 ######################### end of start procedure  ################################
 
 
