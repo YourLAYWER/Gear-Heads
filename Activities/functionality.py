@@ -35,32 +35,104 @@ print(gyro.angle())
 wait(1000)
 '''
 
+###Method Definitions
+def move_and_wait(distance, pause=2000):
+    # Move the robot straight for the given distance.
+    robot.straight(distance)
+    # Pause after the movement.
+    wait(pause)
+
+
+def turn_and_wait(angle, pause=2000):
+    # Turn the robot by the given angle.
+    robot.turn(angle)
+    # Pause after the turn.
+    wait(pause)
+
+
+def celebrate():
+    ev3.speaker.beep()
+    wait(300)
+    ev3.speaker.beep()
+
+def move(distance):
+    """
+    Drives the robot straight forward or backward.
+    
+    distance: The distance to travel in millimeters. 
+              Positive values move forward, negative values reverse.
+    """
+    robot.straight(distance)
+    # Pause for 1 second after moving to let momentum settle
+    wait(1000)
+
+def turn(angle):
+    """
+    Turns the robot in place.
+    
+    angle: The target angle to turn in degrees.
+           Positive values turn right (clockwise), negative turn left.
+    """
+    robot.turn(angle)
+    wait(1000)
+
+def lift_up():
+    """
+    Moves the attachment to the predefined UP position.
+    """
+    # run_target moves the motor to an absolute angle (90 degrees), 
+    # regardless of where it currently is, at a speed of 200 deg/s.
+    lift_motor.run_target(200, LIFT_UP_ANGLE)
+    wait(500)
+
+def lift_down():
+    """
+    Moves the attachment to the predefined DOWN position.
+    """
+    # run_target returns the motor to the absolute 0 degree mark.
+    lift_motor.run_target(200, LIFT_DOWN_ANGLE)
+    wait(500)
+
+def color_move(distance_covered):    
+    while True:
+        if(distance_covered == 1500):
+            break      
+        ev3.speaker.beep()
+        ev3.screen.clear()
+        ev3.screen.draw_text(0, 50, "Following Line...")
+        current_reflection = line_sensor.reflection()
+        error = current_reflection - TARGET_THRESHOLD
+        steering = error * PROPORTIONAL_GAIN
+        robot.drive(DRIVE_SPEED, steering)
+        wait(50)
+        distance_covered += 1
+
 ##INITIALISATION STARTS
 #Set Black
 ev3.screen.clear()
 ev3.screen.draw_text(0, 20, "Place on BLACK")
 ev3.screen.draw_text(0, 50, "Press any btn") 
 while len(ev3.buttons.pressed()) == 0:
-wait(10)
+    wait(10)
 black_value = line_sensor.reflection()
 ev3.speaker.beep(500, 200)
 
 #Debounce command follows, ensures that the user isn't pressing anything
 while len(ev3.buttons.pressed()) > 0:  
-wait(10)
+    wait(10)
 
 #Set White
 ev3.screen.clear()
 ev3.screen.draw_text(0, 20, "Place on WHITE")
 ev3.screen.draw_text(0, 50, "Press any btn")
 while len(ev3.buttons.pressed()) == 0:
-wait(10)
+    wait(10)
 white_value = line_sensor.reflection()
 ev3.speaker.beep(1000, 200)
 
 #Debounce again
 while len(ev3.buttons.pressed()) > 0:
-wait(10)
+    wait(10)
 return black_value, white_value
 
 #Calculations for initialization
@@ -93,19 +165,7 @@ turn(-90)
 distance_covered +- 90
 
 #Next block follows the line forward until the end.(Using color sensor)
-def color_move(distance_covered):    
-    while True:
-        if(distance_covered == 1500):
-            break      
-        ev3.speaker.beep()
-        ev3.screen.clear()
-        ev3.screen.draw_text(0, 50, "Following Line...")
-        current_reflection = line_sensor.reflection()
-        error = current_reflection - TARGET_THRESHOLD
-        steering = error * PROPORTIONAL_GAIN
-        robot.drive(DRIVE_SPEED, steering)
-        wait(50)
-        distance_covered += 1
+
 
 color_move(distance_covered)
 
@@ -113,7 +173,7 @@ color_move(distance_covered)
 ev3.screen.draw_text(0, 30, "Lowering the bar")
 lift_down()
 
-#Move back (Out of the way fo the car)
+#Move back (Out of the way of the car)
 move(-400)
 #Turn Around (180 Degrees)
 turn(180)

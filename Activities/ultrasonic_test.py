@@ -31,7 +31,7 @@ gyro_sensor= GyroSensor(Port.S1)
 
 ####################### Here is where my code starts ############################
 DRIVE_SPEED = 2
-TARGET_DISTANCE = 150
+TARGET_DISTANCE = 100
 SPEED_GAIN = 1.8
 
 COLOR_GAIN = 1.3
