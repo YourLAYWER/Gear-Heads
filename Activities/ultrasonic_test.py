@@ -106,10 +106,10 @@ def drive_robot(max_speed=65,red_value):
     ev3.speaker.say("starting self driving procedure")
     while True:
 
-        if line_sensor.distance() == Color.RED:
-            robot.stop()
-            ev3.speaker.say("Mission complete")
-            break
+        # if line_sensor.distance() == Color.RED:
+        #     robot.stop()
+        #     ev3.speaker.say("Mission complete")
+        #     break
 
 
         current_distance = ultrasonic.distance()
