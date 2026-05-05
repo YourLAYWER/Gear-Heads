@@ -77,22 +77,35 @@ ev3.screen.draw_text(20, 50, "Ready!")
 wait(400)
 countdown()
 
+def draw_eyes():
+    ev3.screen.clear()
+
+    # LEFT EYE (big circle)
+    ev3.screen.draw_circle(50, 60, 35)
+
+    # RIGHT EYE (big circle)
+    ev3.screen.draw_circle(130, 60, 35)
+
+    # PUPILS (filled smaller circles)
+    ev3.screen.draw_circle(50, 60, 10, fill=True)
+    ev3.screen.draw_circle(130, 60, 10, fill=True)
+
 # Eyes
-# ev3.screen.clear()
-# ev3.screen.draw_circle(40, 50, 50)
-# ev3.screen.draw_circle(40, 50, 50)
+ev3.screen.clear()
+ev3.screen.draw_circle(50, 60, 35)
+ev3.screen.draw_circle(130, 60, 35)
 
 # # Eyes pupils
-# ev3.screen.draw_circle(90, 100, 10, fill=True)
-# ev3.screen.draw_circle(190, 100, 10, fill= True)
+ev3.screen.draw_circle(50, 60, 10, fill=True)
+ev3.screen.draw_circle(130, 60, 10, fill=True)
 
 #--------------------
 # MUSIC SETUP
 #--------------------
-try:
-    ev3.speaker.play_file("music.wav", wait=False)
-except:
-    ev3.screen.draw_text(20, 30, "Will stop")
+# try:
+#     ev3.speaker.play_file("music.wav", wait=False)
+# except:
+#     ev3.screen.draw_text(20, 30, "Will stop")
 # ---------------------------------------------------------
 # MAIN LOOP
 # ---------------------------------------------------------
