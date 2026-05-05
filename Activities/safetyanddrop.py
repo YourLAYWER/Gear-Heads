@@ -69,7 +69,7 @@ wait(2000)
 # =============================================================================
 DRIVE_SPEED = 60       
 PROPORTIONAL_GAIN = 1.2#steering sensitivity
-RUN_TIME_MS = 19220
+RUN_TIME_MS = 17220
 ev3.speaker.beep()
 ev3.screen.clear()
 ev3.screen.draw_text(0, 50, "Following Line...")
