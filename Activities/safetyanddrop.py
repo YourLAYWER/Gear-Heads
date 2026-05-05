@@ -67,7 +67,7 @@ wait(2000)
 # =============================================================================
 # 4. INTEGRATED P-CONTROL LOOP
 # =============================================================================
-DRIVE_SPEED = 100       
+DRIVE_SPEED = 60       
 PROPORTIONAL_GAIN = 1.2#steering sensitivity
 
 ev3.speaker.beep()
@@ -80,7 +80,7 @@ while True:
 
     # Standard behavior: Move forward or search for line
     # (Insert your line-following logic here, for example:)
-    robot.drive(150, 0) 
+    robot.drive(60, 0) 
 
     # 3. The "Black Line Detected" Trigger
     '''
