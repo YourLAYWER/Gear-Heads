@@ -9,7 +9,7 @@ from pybricks.ev3devices import ColorSensor
 from pybricks.robotics import DriveBase
 
 #Constants First
-DRIVE_SPEED = 30  #Measured in mm/s   
+DRIVE_SPEED = 80  #Measured in mm/s   
 PROPORTIONAL_GAIN = 0.8 #Determines wobbliness/sluggishness of the bot.
 LIFT_UP_ANGLE = 90     # The absolute angle representing the "up" position
 LIFT_DOWN_ANGLE = 0    # The absolute angle representing the "down" position
