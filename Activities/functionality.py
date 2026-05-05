@@ -95,7 +95,7 @@ def lift_down():
 
 def color_move(distance_covered):    
     while True:
-        if(distance_covered == 1500):
+        if(distance_covered == 1100):
             break
         ev3.screen.draw_text(0, 50, "Following Line...")
         current_reflection = line_sensor.reflection()
@@ -145,6 +145,7 @@ wait(3000)
 ##INITIALISATION DONE
 
 #Lower the bar 100% 
+ev3.screen.clear()
 ev3.screen.draw_text(0, 30, "Lowering the bar")
 lift_motor.reset_angle(0)
 lift_down()
