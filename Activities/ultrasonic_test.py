@@ -103,7 +103,7 @@ def drive_robot(max_speed=65):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Following Line...")
-    ev3.speaker.speak("starting self driving procedure").wait(3)
+    ev3.speaker.say("starting self driving procedure")
     while True:
         current_distance = ultrasonic.distance()
         error = current_distance - TARGET_DISTANCE
@@ -174,7 +174,6 @@ ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
 ev3.screen.draw_text(0, 60, "Thr: " + str(THRESHOLD))
 
 ev3.speaker.beep(1000, 200)  # end of THRESHOLD calculation
-
-wait(3000) 
-
+print("calibration complete")
+wait(5)
 drive_robot()
