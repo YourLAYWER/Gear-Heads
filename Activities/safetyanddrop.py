@@ -84,36 +84,6 @@ while True:
     # (Insert your line-following logic here, for example:)
     robot.drive(60, 0) 
 
-    # 3. The "Black Line Detected" Trigger
-    #if current_reflection < (black_value + 5):
-        # Stop and notify
-        #robot.stop()
-        #ev3.speaker.beep()
-        
-        # --- TURN 90 DEGREES ---
-        #wait(50)             # Pause for stability
-        #gyro.reset_angle(0)  # Set current position as 0
-        #wait(50)             # Ensure reset is registered
-        
-        #robot.drive(0, 40)   # Start rotating at 40 degrees per second
-        
-        # Monitor the gyro until it hits 90 degrees
-        #while abs(gyro.angle()) < 90:
-            #wait(10)
-            
-        #robot.stop()         # Stop the rotation
-        
-        # --- MOVE FORWARD ---
-        # 300mm = 30cm. Change to 3000 for 3 meters.
-        #robot.straight(300) 
-        
-        # Go back to the top of the loop to start fresh
-        #continue
-    #Detect End of Line (Pure White Floor)
-    #if current_reflection > (white_value - 2):
-        #robot.stop()
-        #break # Exit loop to reach Final Drop
-
     #Calculate Error
     error = current_reflection - TARGET_THRESHOLD
     
@@ -128,7 +98,33 @@ while True:
 # =============================================================================
 # 5. FINAL DROP
 # =============================================================================
+robot.stop()#robot stops after 17.22 seconds
 # This runs only after the robot sees white and breaks the loop
 lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
+# Move back a set distance (e.g., 100mm)
+robot.straight(-100) 
+
+# --- TURN right ---
+robot.turn(90)
+while line_sensor.reflection() > TARGET_THRESHOLD:
+    robot.drive(0, 20) # Slow, precise rotation (speed 20)
+    wait(5)
+
+robot.stop()
+ev3.speaker.beep(600, 100)
+
+# --- SECOND LINE FOLLOW (Same time as before) ---
+print("Final 17.22 second stretch...")
+timer.reset() # Reset the timer to start from 0 for the new move
+
+while timer.time() < RUN_TIME_MS:
+    current_reflection = line_sensor.reflection()
+    error = current_reflection - TARGET_THRESHOLD
+    steering = error * PROPORTIONAL_GAIN
+    robot.drive(DRIVE_SPEED, steering) # Use line following again
+    wait(10)
+
+# CRITICAL: Stop immediately after the second 17.22 seconds
+robot.stop()
 ev3.speaker.say("Mission complete")
 print("Mission complete")
