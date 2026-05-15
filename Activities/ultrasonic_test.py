@@ -172,43 +172,42 @@ def drive_robot(max_speed=65):
         wait(10)
 
 ####################### this code is for calculating the THRESHOLD ##########################      
-# ev3.screen.clear()
-# ev3.screen.draw_text(0,20, "Place on Black")
-# ev3.screen.draw_text(0,50, "Press any button")
-# while len(ev3.buttons.pressed()) == 0:
-#     wait(5)
+ev3.screen.clear()
+ev3.screen.draw_text(0,20, "Place on Black")
+ev3.screen.draw_text(0,50, "Press any button")
+while len(ev3.buttons.pressed()) == 0:
+    wait(5)
     
-# black_value = line_sensor.reflection()
+black_value = line_sensor.reflection()
 
-# while len(ev3.buttons.pressed()) > 0:
-#     wait(10)
-# ev3.speaker.beep()
+while len(ev3.buttons.pressed()) > 0:
+    wait(10)
+ev3.speaker.beep()
 
 
-# # measure white
-# ev3.screen.clear()
-# ev3.screen.draw_text(0, 20, "Place on WHITE")
-# ev3.screen.draw_text(0, 50, "Press any btn")
-# while len(ev3.buttons.pressed()) == 0:
-#     wait(5)
+# measure white
+ev3.screen.clear()
+ev3.screen.draw_text(0, 20, "Place on WHITE")
+ev3.screen.draw_text(0, 50, "Press any btn")
+while len(ev3.buttons.pressed()) == 0:
+    wait(5)
 
-# white_value = line_sensor.reflection()
+white_value = line_sensor.reflection()
 
-# while len(ev3.buttons.pressed()) > 0:
-#     wait(10)
-# ev3.speaker.beep()
+while len(ev3.buttons.pressed()) > 0:
+    wait(10)
+ev3.speaker.beep()
 
-# THRESHOLD = (black_value + white_value) / 2  
+THRESHOLD = (black_value + white_value) / 2  
 
-# # Display results
-# ev3.screen.clear()
-# ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
-# ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
-# ev3.screen.draw_text(0, 60, "Thr: " + str(THRESHOLD))
+# Display results
+ev3.screen.clear()
+ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
+ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
+ev3.screen.draw_text(0, 60, "Thr: " + str(THRESHOLD))
 
-THRESHOLD = calibrate()
 
 ev3.speaker.beep(1000, 200)  # end of THRESHOLD calculation
 print("calibration complete")
 wait(5)
-drive_robot(red_value)
+drive_robot()
