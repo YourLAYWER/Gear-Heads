@@ -4,7 +4,7 @@ from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import GyroSensor
 from pybricks.parameters import Port
 from pybricks.tools import wait
-from pybricks.ev3devices import Motor
+from pybricks.ev3devices import Motor, TouchSensor
 from pybricks.ev3devices import ColorSensor
 from pybricks.robotics import DriveBase
 
@@ -17,6 +17,7 @@ LIFT_DOWN_ANGLE = 0    # The absolute angle representing the "down" position
 #Variables
 ev3 = EV3Brick()
 gyro = GyroSensor(Port.S1)
+touch = TouchSensor(Port.D)
 line_sensor = ColorSensor(Port.S3)
 lift_motor = Motor(Port.A)
 left_motor = Motor(Port.B)
@@ -97,6 +98,7 @@ def color_move(distance_covered):
     while True:
         if(distance_covered == 1105):
             break
+        ev3.screen.clear()
         ev3.screen.draw_text(0, 50, "Following Line...")
         current_reflection = line_sensor.reflection()
         error = current_reflection - TARGET_THRESHOLD
@@ -104,6 +106,54 @@ def color_move(distance_covered):
         robot.drive(DRIVE_SPEED, steering)
         wait(50)
         distance_covered += 1
+
+def touch_move():
+     # Command the robot to drive forward indefinitely at 200 mm/s with 0 steering.
+    # Because this is inside a while loop, it keeps refreshing the command.
+    robot.drive(200, 0)
+
+    # Poll the touch sensor. The .pressed() method returns a boolean (True/False).
+    if touch.pressed():
+        
+        # Immediate reaction: Stop the motors to prevent pushing into the obstacle.
+        robot.stop()
+
+        # Output to the console for debugging purposes.
+        print("Touch pressed! Obstacle detected.")
+
+        # ---------------------------------
+        # EXCEPTION HANDLING
+        # ---------------------------------
+        # Attempt to play a specific audio file. If the file "oopsy.wav" is missing 
+        # from the EV3's file system, the program would normally crash. 
+        # The try/except block catches this FileNotFoundError and safely defaults 
+        # to a standard beep, keeping the robot operational.
+        try:
+             ev3.speaker.play_file("oopsy.wav")
+        except:
+            ev3.speaker.beep()
+
+        # Wait 1.5 seconds (1500 ms) to let the sound finish playing
+        wait(1500)
+
+        # ---------------------------------
+        # EVASIVE MANEUVER
+        # ---------------------------------
+        # Move backwards by 100 millimeters to clear the obstacle
+        robot.straight(-100)
+
+        # Brief pause to allow momentum to settle after turning
+        wait(500)
+
+        # ---------------------------------
+        # STATE MANAGEMENT (DEBOUNCING)
+        # ---------------------------------
+        # 🔥 CRITICAL: If the robot backed up but the sensor is somehow STILL pressed 
+        # (e.g., it got snagged, or a user is holding it), the loop would immediately 
+        # trigger again. This nested while loop acts as a block, pausing the main 
+        # program flow until the physical button is explicitly released.
+        while touch.pressed():
+            wait(10) # Check every 10ms, do nothing until False.
 
 ##INITIALISATION STARTS
 #Set Black
@@ -151,7 +201,7 @@ lift_motor.reset_angle(0)
 lift_down()
 
 #Move toward the car
-move(900)
+touch_move()
 distance_covered += 900
 
 #Raise the bar 100%
@@ -161,28 +211,30 @@ lift_up()
 #Turn Towards the road
 turn(-90)
 distance_covered += 90
+# Brief pause to allow momentum to settle after turning
+wait(500)
 
 #Next block follows the line forward until the end.(Using color sensor)
-
+ev3.screen.clear()
 color_move(distance_covered)
+wait(500)
 
 #Lower the bar 100% (Car drop off)
 ev3.screen.draw_text(0, 30, "Lowering the bar")
 lift_down()
 
 #Move back (Out of the way of the car)
-move(-400)
-#Turn Around (180 Degrees)
-turn(180)
+move(-100)
+wait(500)
+#Turn Left (45 Degrees)
+turn(-45)
 
-#Follow the line back (To the pick up point)
+#Follow the line to the end corner
 trip_two_distance = 0 #To be used as the new distance_covered variable
-color_move(trip_two_distance)
+robot.drive(200, 0)
 
 #Beep to indicate the end of the road
-
-
-#Implementation of victory sound will follow. Still yet to find a sound to use.
+celebrate()
 
 
 
