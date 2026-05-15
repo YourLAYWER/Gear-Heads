@@ -30,7 +30,7 @@ gyro_sensor= GyroSensor(Port.S1)
 
 
 ####################### Here is where my code starts ############################
-DRIVE_SPEED = 40
+DRIVE_SPEED = 2
 TARGET_DISTANCE = 100
 SPEED_GAIN = 1.8
 
@@ -92,8 +92,8 @@ def calibrate():
     ev3.screen.draw_text(0, 25, "Wht: " + str(white))
     ev3.screen.draw_text(0, 45, "Thr: " + str(new_threshold))
     ev3.screen.draw_text(0, 70, "Press to START")
+    while ev3.buttons.pressed(): wait(10)
     
-    while not ev3.buttons.pressed(): wait(10)
     return new_threshold
 
 
@@ -172,7 +172,39 @@ def drive_robot(max_speed=65):
         wait(10)
 
 ####################### this code is for calculating the THRESHOLD ##########################      
+# ev3.screen.clear()
+# ev3.screen.draw_text(0,20, "Place on Black")
+# ev3.screen.draw_text(0,50, "Press any button")
+# while len(ev3.buttons.pressed()) == 0:
+#     wait(5)
+    
+# black_value = line_sensor.reflection()
 
+# while len(ev3.buttons.pressed()) > 0:
+#     wait(10)
+# ev3.speaker.beep()
+
+
+# # measure white
+# ev3.screen.clear()
+# ev3.screen.draw_text(0, 20, "Place on WHITE")
+# ev3.screen.draw_text(0, 50, "Press any btn")
+# while len(ev3.buttons.pressed()) == 0:
+#     wait(5)
+
+# white_value = line_sensor.reflection()
+
+# while len(ev3.buttons.pressed()) > 0:
+#     wait(10)
+# ev3.speaker.beep()
+
+# THRESHOLD = (black_value + white_value) / 2  
+
+# # Display results
+# ev3.screen.clear()
+# ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
+# ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
+# ev3.screen.draw_text(0, 60, "Thr: " + str(THRESHOLD))
 
 THRESHOLD = calibrate()
 
