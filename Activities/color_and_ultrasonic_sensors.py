@@ -99,7 +99,7 @@ def avoid_obstacle(width=200, length=300):
     robot.turn(90)
     wait(2000)
     
-def drive_robot(max_speed=65,red_value):
+def drive_robot(max_speed=65):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Following Line...")
@@ -195,6 +195,9 @@ ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
 ev3.screen.draw_text(0, 30, "Red: " + str(red_value))
 ev3.screen.draw_text(0, 60, "Thr: " + str(THRESHOLD))
 
+while len(ev3.buttons.pressed()) > 0:
+    wait(10)
+ev3.speaker.beep()
 ev3.speaker.beep(1000, 200)  # end of THRESHOLD calculation
 print("calibration complete")
 wait(5)
