@@ -121,7 +121,7 @@ timer.reset() # Reset the timer to start from 0 for the new move
 while timer.time() < RUN_TIME_MS:
     current_reflection = line_sensor.reflection()
     error = current_reflection - TARGET_THRESHOLD
-    steering = error * PROPORTIONAL_GAIN
+    steering = error * PROPORTIONAL_GAIN*-1
     robot.drive(DRIVE_SPEED, steering) # Use line following again
     wait(10)
 
