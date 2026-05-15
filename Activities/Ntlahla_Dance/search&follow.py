@@ -25,15 +25,15 @@ ultrasonic = UltrasonicSensor(Port.S4)
 touch_sensor = TouchSensor(Port.S2)
 
 # -------------------------
-# SETTINGS
+# MODE SETTINGS
 # -------------------------
 
 follow_mode = False
+return_mode = False
 
-TARGET_DISTANCE = 200   # 20 cm
+TARGET_DISTANCE = 200
 MOVE_SPEED = 120
-
-RELEASE_DISTANCE = 120  # 12 cm from release tool
+RELEASE_DISTANCE = 120
 
 
 # -------------------------
@@ -41,37 +41,16 @@ RELEASE_DISTANCE = 120  # 12 cm from release tool
 # -------------------------
 
 def push_release_tool():
-    robot.straight(60)     # push forward
+    robot.straight(60)
     wait(300)
 
-    robot.straight(-70)    # move back to reset
+    robot.straight(-70)
     wait(300)
-
-
-def collect_items():
-
-    ev3.speaker.say("Collecting")
-
-    for count in range(3):
-        push_release_tool()
-
-    ev3.speaker.say("Returning")
-
-    # turn around
-    turn_around()
-
-    # follow back forever until stopped
-    while True:
-        follow_target()
-        wait(50)
 
 
 def turn_around():
     robot.turn(180)
 
-#-------------------------
-#STILL TO ADD THE FOLLOW BACK CODE
-#------------------------------------
 
 def follow_target():
     distance = ultrasonic.distance()
@@ -81,20 +60,38 @@ def follow_target():
     else:
         robot.stop()
 
+
+def collect_items():
+    global return_mode
+
+    ev3.speaker.say("Collecting")
+
+    for count in range(3):
+        push_release_tool()
+
+    ev3.speaker.say("Returning")
+
+    turn_around()
+
+    return_mode = True
+
+
 # -------------------------
 # MAIN LOOP
 # -------------------------
 
 while True:
 
-    # Touch sensor toggles follow mode
+    # Touch sensor stops everything
     if touch_sensor.pressed():
 
         follow_mode = not follow_mode
 
         if follow_mode:
+            return_mode = False
             ev3.speaker.say("Follow mode")
         else:
+            return_mode = False
             ev3.speaker.say("Stopped")
             robot.stop()
 
@@ -102,25 +99,28 @@ while True:
             wait(10)
 
     # -------------------------
-    # FOLLOW LOGIC
+    # FOLLOW TO COLLECTION POINT
     # -------------------------
 
     if follow_mode:
 
         distance = ultrasonic.distance()
 
-        # Object/person is far, move forward
         if distance > TARGET_DISTANCE:
             robot.drive(MOVE_SPEED, 0)
-
-        # Object/person is close enough
         else:
             robot.stop()
 
-        # If robot reaches release station
         if distance < RELEASE_DISTANCE:
             robot.stop()
             follow_mode = False
             collect_items()
+
+    # -------------------------
+    # FOLLOW BACK TO BASE
+    # -------------------------
+
+    if return_mode:
+        follow_target()
 
     wait(50)
