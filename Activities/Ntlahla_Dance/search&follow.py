@@ -1,47 +1,41 @@
 #!/usr/bin/env pybricks-micropython
 
 from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor, UltrasonicSensor, TouchSensor
+from pybricks.ev3devices import Motor, TouchSensor
 from pybricks.parameters import Port
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait
 
 ev3 = EV3Brick()
-
-# -------------------------
-# MOTORS
-# -------------------------
-
+#----------------------------------
+# Motors
+#-----------------------------
 left_motor = Motor(Port.B)
 right_motor = Motor(Port.C)
 
 robot = DriveBase(left_motor, right_motor, 56, 121)
 
-# -------------------------
-# SENSORS
-# -------------------------
-
-ultrasonic = UltrasonicSensor(Port.S4)
 touch_sensor = TouchSensor(Port.S2)
 
-#------------------------------------------------
-# MAIN
-#---------------------------------------------------
+ev3.speaker.say("Press to start")
 
-ev3.speaker.say("Press button")
-
-# Wait until button is pressed
+# Wait for first press
 while not touch_sensor.pressed():
     wait(10)
-    ev3.speaker.beep()
 
-    # Move forward
-    robot.straight(300)
-    wait(500)
-    
-    # Move backward
-    robot.straight(-300)
-    wait(500)
-    robot.stop()
-    ev3.speaker.beep()
+# Small delay so one press is not counted twice
+wait(500)
 
+ev3.speaker.say("Moving")
+
+# Start driving forever
+robot.drive(150, 0)
+
+# Wait until button pressed again
+while not touch_sensor.pressed():
+    wait(10)
+
+# Stop robot
+robot.stop()
+
+ev3.speaker.say("Stopped")
