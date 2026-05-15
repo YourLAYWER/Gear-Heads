@@ -24,103 +24,122 @@ robot = DriveBase(left_motor, right_motor, 56, 121)
 ultrasonic = UltrasonicSensor(Port.S4)
 touch_sensor = TouchSensor(Port.S2)
 
-# -------------------------
-# MODE SETTINGS
-# -------------------------
+#-----------------------------
+# TESTING
+#----------------------------
+ev3.speaker.beep()
 
-follow_mode = False
-return_mode = False
+# Move forward
+robot.straight(300)
+wait(500)
 
-TARGET_DISTANCE = 200
-MOVE_SPEED = 120
-RELEASE_DISTANCE = 120
+# Move backward
+robot.straight(-300)
+wait(500)
 
+robot.stop()
+ev3.speaker.beep()
 
-# -------------------------
-# FUNCTIONS
-# -------------------------
+# """
+# # -------------------------
+# # MODE SETTINGS
+# # -------------------------
 
-def push_release_tool():
-    robot.straight(60)
-    wait(300)
+# follow_mode = False
+# return_mode = False
 
-    robot.straight(-70)
-    wait(300)
-
-
-def turn_around():
-    robot.turn(180)
-
-
-def follow_target():
-    distance = ultrasonic.distance()
-
-    if distance > TARGET_DISTANCE:
-        robot.drive(MOVE_SPEED, 0)
-    else:
-        robot.stop()
+# TARGET_DISTANCE = 200
+# MOVE_SPEED = 120
+# RELEASE_DISTANCE = 120
 
 
-def collect_items():
-    global return_mode
+# # -------------------------
+# # FUNCTIONS
+# # -------------------------
 
-    ev3.speaker.say("Collecting")
+# def push_release_tool():
+#     robot.straight(60)
+#     wait(300)
 
-    for count in range(3):
-        push_release_tool()
-
-    ev3.speaker.say("Returning")
-
-    turn_around()
-
-    return_mode = True
+#     robot.straight(-70)
+#     wait(300)
 
 
-# -------------------------
-# MAIN LOOP
-# -------------------------
+# def turn_around():
+#     robot.turn(180)
 
-while True:
 
-    # Touch sensor stops everything
-    if touch_sensor.pressed():
+# def follow_target():
+#     distance = ultrasonic.distance()
 
-        follow_mode = not follow_mode
+#     if distance > TARGET_DISTANCE:
+#         robot.drive(MOVE_SPEED, 0)
+#     else:
+#         robot.stop()
 
-        if follow_mode:
-            return_mode = False
-            ev3.speaker.say("Follow mode")
-        else:
-            return_mode = False
-            ev3.speaker.say("Stopped")
-            robot.stop()
 
-        while touch_sensor.pressed():
-            wait(10)
+# def collect_items():
+#     global return_mode
 
-    # -------------------------
-    # FOLLOW TO COLLECTION POINT
-    # -------------------------
+#     ev3.speaker.say("Collecting")
 
-    if follow_mode:
+#     for count in range(3):
+#         push_release_tool()
 
-        distance = ultrasonic.distance()
+#     ev3.speaker.say("Returning")
 
-        if distance > TARGET_DISTANCE:
-            robot.drive(MOVE_SPEED, 0)
-        else:
-            robot.stop()
+#     turn_around()
 
-        if distance < RELEASE_DISTANCE:
-            robot.stop()
-            follow_mode = False
-            collect_items()
+#     return_mode = True
 
-    # -------------------------
-    # FOLLOW BACK TO BASE
-    # -------------------------
 
-    if return_mode:
-        follow_target()
+# # -------------------------
+# # MAIN LOOP
+# # -------------------------
 
-    wait(50)
+# while True:
+
+#     # Touch sensor stops everything
+#     if touch_sensor.pressed():
+
+#         follow_mode = not follow_mode
+
+#         if follow_mode:
+#             return_mode = False
+#             ev3.speaker.say("Follow mode")
+#         else:
+#             return_mode = False
+#             ev3.speaker.say("Stopped")
+#             robot.stop()
+
+#         while touch_sensor.pressed():
+#             wait(10)
+
+#     # -------------------------
+#     # FOLLOW TO COLLECTION POINT
+#     # -------------------------
+
+#     if follow_mode:
+
+#         distance = ultrasonic.distance()
+
+#         if distance > TARGET_DISTANCE:
+#             robot.drive(MOVE_SPEED, 0)
+#         else:
+#             robot.stop()
+
+#         if distance < RELEASE_DISTANCE:
+#             robot.stop()
+#             follow_mode = False
+#             collect_items()
+
+#     # -------------------------
+#     # FOLLOW BACK TO BASE
+#     # -------------------------
+
+#     if return_mode:
+#         follow_target()
+
+#     wait(50)
+
+#     """
