@@ -33,16 +33,15 @@ ev3.speaker.say("Press button")
 # Wait until button is pressed
 while not touch_sensor.pressed():
     wait(10)
+    ev3.speaker.beep()
 
-ev3.speaker.beep()
+    # Move forward
+    robot.straight(300)
+    wait(500)
+    
+    # Move backward
+    robot.straight(-300)
+    wait(500)
+    robot.stop()
+    ev3.speaker.beep()
 
-# Move forward
-robot.straight(300)
-wait(500)
-
-# Move backward
-robot.straight(-300)
-wait(500)
-
-robot.stop()
-ev3.speaker.beep()
