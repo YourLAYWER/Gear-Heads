@@ -30,7 +30,7 @@ gyro_sensor= GyroSensor(Port.S1)
 
 
 ####################### Here is where my code starts ############################
-DRIVE_SPEED = 2
+DRIVE_SPEED = 30
 TARGET_DISTANCE = 100
 SPEED_GAIN = 1.8
 
@@ -206,6 +206,9 @@ ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
 ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
 ev3.screen.draw_text(0, 60, "Thr: " + str(THRESHOLD))
 
+while len(ev3.buttons.pressed()) > 0:
+    wait(10)
+ev3.speaker.beep()
 
 ev3.speaker.beep(1000, 200)  # end of THRESHOLD calculation
 print("calibration complete")
