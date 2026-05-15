@@ -25,7 +25,7 @@ ultrasonic = UltrasonicSensor(Port.S4)
 touch_sensor = TouchSensor(Port.S2)
 
 # -------------------------
-# MODES / SETTINGS
+# MODE SETTINGS
 # -------------------------
 
 follow_mode = False
