@@ -107,8 +107,7 @@ robot.straight(-119)
 # --- TURN right ---
 robot.turn(90)
 while line_sensor.reflection() > TARGET_THRESHOLD:
-    robot.turn(90)
-    robot.drive(0, 30) # Slow, precise rotation (speed 20)
+    robot.drive(0, 20) # Slow, precise rotation (speed 20)
     wait(5)
 
 robot.stop()
