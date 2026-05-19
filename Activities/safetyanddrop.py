@@ -1,6 +1,6 @@
 #!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor, ColorSensor, GyroSensor
+from pybricks.ev3devices import Motor, ColorSensor
 from pybricks.parameters import Port
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait,StopWatch
@@ -16,7 +16,7 @@ lift_motor = Motor(Port.A)
 
 # Sensors
 line_sensor = ColorSensor(Port.S3)
-gyro = GyroSensor(Port.S1)
+#gyro = GyroSensor(Port.S1)
 
 # Robot Dimensions (Wheel Diameter: 56mm, Axle Track: 121mm)
 robot = DriveBase(left_motor, right_motor, 56, 121)
@@ -98,16 +98,16 @@ robot.stop()#robot stops after 17.22 seconds
 # This runs only after the robot sees white and breaks the loop
 lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
 # Move back a set distance (e.g., 100mm)
-robot.straight(-119) 
+robot.straight(-19) 
 
 # --- TURN right ---
 robot.turn(90)
-robot.straight(40)
-robot.turn(90)
-fresh_white = line_sensor.reflection()
-LEG2_THRESHOLD = (black_value + fresh_white) / 2
-while line_sensor.reflection() > LEG2_THRESHOLD:
-    robot.drive(0, 40) # Slow, precise rotation (speed 20)
+#robot.straight(40)
+#robot.turn(90)
+#fresh_white = line_sensor.reflection()
+#LEG2_THRESHOLD = (black_value + fresh_white) / 2
+while line_sensor.reflection() > TARGET_THRESHOLD:
+    robot.drive(0, 20) # Slow, precise rotation (speed 20)
     wait(5)
 
 robot.stop()
@@ -119,7 +119,7 @@ timer.reset() # Reset the timer to start from 0 for the new move
 
 while timer.time() < RUN_TIME_MS:
     current_reflection = line_sensor.reflection()
-    error = current_reflection - LEG2_THRESHOLD
+    error = current_reflection - TARGET_THRESHOLD
     steering = (error * PROPORTIONAL_GAIN)
     robot.drive(DRIVE_SPEED, steering) # Use line following again
     wait(10)
