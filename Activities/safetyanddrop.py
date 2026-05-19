@@ -17,10 +17,7 @@ lift_motor = Motor(Port.A)
 # Sensors
 line_sensor = ColorSensor(Port.S3)
 #gyro = GyroSensor(Port.S1)
-<<<<<<< HEAD
 
-=======
->>>>>>> 349e7a867ad564df85f4bde14e91c7e42fe51a48
 
 # Robot Dimensions (Wheel Diameter: 56mm, Axle Track: 121mm)
 robot = DriveBase(left_motor, right_motor, 56, 121)
@@ -71,12 +68,10 @@ wait(2000)
 # =============================================================================
 # 4. INTEGRATED P-CONTROL LOOP
 # =============================================================================
-DRIVE_SPEED = 60       
-<<<<<<< HEAD
+DRIVE_SPEED = 60      
 PROPORTIONAL_GAIN = 1.4#steering sensitivity
 =======
 PROPORTIONAL_GAIN = 1.3#steering sensitivity
->>>>>>> 349e7a867ad564df85f4bde14e91c7e42fe51a48
 RUN_TIME_MS = 19900
 ev3.speaker.beep()
 ev3.screen.clear()
