@@ -16,7 +16,7 @@ robot = DriveBase(left_motor, right_motor, 56, 121)
 touch_sensor = TouchSensor(Port.S2)
 ultrasonic = UltrasonicSensor(Port.S4)
 
-TARGET_DISTANCE = 50
+TARGET_DISTANCE = 150
 MAX_DISTANCE = 600
 MOVE_SPEED = 80
 
@@ -40,10 +40,9 @@ while True:
 
     else:
         robot.stop()
-
         wait(500)
 
-        robot.urn(-20)
+        robot.turn(-20)
 
         distance = ultrasonic.distance()
 
@@ -58,5 +57,5 @@ while True:
             continue
 
         robot.turn(-20)
-        
+
     wait(200)
