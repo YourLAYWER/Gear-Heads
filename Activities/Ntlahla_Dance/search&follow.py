@@ -1,7 +1,7 @@
 #!/usr/bin/env pybricks-micropython
 
 from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor, TouchSensor, UltrasonicSensor
+from pybricks.ev3devices import Motor, TouchSensor, UltrasonicSensor, GyroSensor
 from pybricks.parameters import Port
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait
@@ -15,10 +15,29 @@ robot = DriveBase(left_motor, right_motor, 56, 121)
 
 touch_sensor = TouchSensor(Port.S2)
 ultrasonic = UltrasonicSensor(Port.S4)
+gyro_sensor = GyroSensor(Port.S1)
 
-TARGET_DISTANCE = 150
+TARGET_DISTANCE = 80
 MAX_DISTANCE = 600
 MOVE_SPEED = 80
+
+def gyro_turn(target_angle):
+    gyro_sensor.reset_angle(0)
+    wait(300)
+
+    if target_angle > 0:
+        turn_speed = 40
+    else:
+        turn_speed = -40
+
+    robot.drive(0, turn_speed)
+
+    while abs(gyro_sensor.angle()) < abs(target_angle):
+        wait(10)
+
+    robot.stop()
+    wait(200)
+
 
 ev3.speaker.say("Press")
 
@@ -42,20 +61,20 @@ while True:
         robot.stop()
         wait(500)
 
-        robot.turn(-20)
+        gyro_turn(-20)
 
         distance = ultrasonic.distance()
 
         if TARGET_DISTANCE < distance < MAX_DISTANCE:
             continue
 
-        robot.turn(40)
+        gyro_turn(40)
 
         distance = ultrasonic.distance()
 
         if TARGET_DISTANCE < distance < MAX_DISTANCE:
             continue
 
-        robot.turn(-20)
+        gyro_turn(-20)
 
     wait(200)
