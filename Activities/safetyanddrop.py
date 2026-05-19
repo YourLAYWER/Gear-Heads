@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, ColorSensor, GyroSensor
@@ -17,6 +18,27 @@ lift_motor = Motor(Port.A)
 # Sensors
 line_sensor = ColorSensor(Port.S3)
 gyro = GyroSensor(Port.S1)
+=======
+#!/usr/bin/env pybricks-micropython
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import Motor, ColorSensor
+from pybricks.parameters import Port
+from pybricks.robotics import DriveBase
+from pybricks.tools import wait,StopWatch
+
+# =============================================================================
+# 1. SETUP & INITIALIZATION
+# =============================================================================
+ev3 = EV3Brick()
+
+left_motor = Motor(Port.B)
+right_motor = Motor(Port.C)
+lift_motor = Motor(Port.A) 
+
+# Sensors
+line_sensor = ColorSensor(Port.S3)
+#gyro = GyroSensor(Port.S1)
+>>>>>>> dd95aeeeac47b139590dbb0d330c2a7f959847d2
 
 # Robot Dimensions (Wheel Diameter: 56mm, Axle Track: 121mm)
 robot = DriveBase(left_motor, right_motor, 56, 121)
@@ -69,7 +91,7 @@ wait(2000)
 # =============================================================================
 DRIVE_SPEED = 60       
 PROPORTIONAL_GAIN = 1.0#steering sensitivity
-RUN_TIME_MS = 19000
+RUN_TIME_MS = 19900
 ev3.speaker.beep()
 ev3.screen.clear()
 ev3.screen.draw_text(0, 50, "Following Line...")
@@ -78,17 +100,13 @@ while True:
     # Get current sensor reading
     if timer.time() > RUN_TIME_MS:
         break
-    current_reflection = line_sensor.reflection()
-
-    # Standard behavior: Move forward or search for line
-    # (Insert your line-following logic here, for example:)
-    robot.drive(60, 0) 
+    current_reflection = line_sensor.reflection() 
 
     #Calculate Error
     error = current_reflection - TARGET_THRESHOLD
     
     #Calculate Steering
-    steering = error * PROPORTIONAL_GAIN
+    steering = (error * PROPORTIONAL_GAIN)*-1
     
     #Apply drive
     robot.drive(DRIVE_SPEED, steering)
@@ -102,14 +120,17 @@ robot.stop()#robot stops after 17.22 seconds
 # This runs only after the robot sees white and breaks the loop
 lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
 # Move back a set distance (e.g., 100mm)
-robot.straight(-119) 
+#robot.straight(-10) 
 
 # --- TURN right ---
-robot.turn(90)
-robot.turn(90)
-while line_sensor.reflection() > TARGET_THRESHOLD:
-    robot.drive(0, 20) # Slow, precise rotation (speed 20)
-    wait(5)
+robot.turn(76)
+#robot.straight(40)
+#robot.turn(90)
+#fresh_white = line_sensor.reflection()
+#LEG2_THRESHOLD = (black_value + fresh_white) / 2
+#while line_sensor.reflection() > TARGET_THRESHOLD:
+    #robot.drive(0, 20) # Slow, precise rotation (speed 20)
+    #wait(5)
 
 robot.stop()
 ev3.speaker.beep(600, 100)
@@ -121,7 +142,7 @@ timer.reset() # Reset the timer to start from 0 for the new move
 while timer.time() < RUN_TIME_MS:
     current_reflection = line_sensor.reflection()
     error = current_reflection - TARGET_THRESHOLD
-    steering = error * PROPORTIONAL_GAIN*-1
+    steering = (error * PROPORTIONAL_GAIN)
     robot.drive(DRIVE_SPEED, steering) # Use line following again
     wait(10)
 
