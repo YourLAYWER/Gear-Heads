@@ -30,7 +30,7 @@ gyro_sensor = GyroSensor(Port.S1)
 # SETTINGS
 # -------------------------
 
-TARGET_DISTANCE = 50
+TARGET_DISTANCE = 180
 MAX_DISTANCE = 600
 MOVE_SPEED = 80
 
