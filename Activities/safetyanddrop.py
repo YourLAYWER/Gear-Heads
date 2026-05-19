@@ -106,7 +106,7 @@ while True:
     error = current_reflection - TARGET_THRESHOLD
     
     #Calculate Steering
-    steering = (error * PROPORTIONAL_GAIN)*-1
+    steering = (error * PROPORTIONAL_GAIN)
     
     #Apply drive
     robot.drive(DRIVE_SPEED, steering)
