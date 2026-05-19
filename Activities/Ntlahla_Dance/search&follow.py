@@ -41,4 +41,22 @@ while True:
     else:
         robot.stop()
 
+        wait(500)
+
+        robot.urn(-20)
+
+        distance = ultrasonic.distance()
+
+        if TARGET_DISTANCE < distance < MAX_DISTANCE:
+            continue
+
+        robot.turn(40)
+
+        distance = ultrasonic.distance()
+
+        if TARGET_DISTANCE < distance < MAX_DISTANCE:
+            continue
+
+        robot.turn(-20)
+        
     wait(200)
