@@ -143,6 +143,8 @@ while timer.time() < RUN_TIME_MS:
     current_reflection = line_sensor.reflection()
     error = current_reflection - TARGET_THRESHOLD
     steering = (error * PROPORTIONAL_GAIN)
+    if error < 0:
+        steering -= 10
     robot.drive(DRIVE_SPEED, steering) # Use line following again
     wait(10)
 
