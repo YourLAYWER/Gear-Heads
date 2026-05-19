@@ -78,11 +78,7 @@ while True:
     # Get current sensor reading
     if timer.time() > RUN_TIME_MS:
         break
-    current_reflection = line_sensor.reflection()
-
-    # Standard behavior: Move forward or search for line
-    # (Insert your line-following logic here, for example:)
-    robot.drive(60, 0) 
+    current_reflection = line_sensor.reflection() 
 
     #Calculate Error
     error = current_reflection - TARGET_THRESHOLD
@@ -106,9 +102,12 @@ robot.straight(-119)
 
 # --- TURN right ---
 robot.turn(90)
+robot.straight(40)
 robot.turn(90)
-while line_sensor.reflection() > TARGET_THRESHOLD:
-    robot.drive(0, 20) # Slow, precise rotation (speed 20)
+fresh_white = line_sensor.reflection()
+LEG2_THRESHOLD = (black_value + fresh_white) / 2
+while line_sensor.reflection() > LEG2_THRESHOLD:
+    robot.drive(0, 40) # Slow, precise rotation (speed 20)
     wait(5)
 
 robot.stop()
@@ -120,8 +119,8 @@ timer.reset() # Reset the timer to start from 0 for the new move
 
 while timer.time() < RUN_TIME_MS:
     current_reflection = line_sensor.reflection()
-    error = current_reflection - TARGET_THRESHOLD
-    steering = error * PROPORTIONAL_GAIN*-1
+    error = current_reflection - LEG2_THRESHOLD
+    steering = (error * PROPORTIONAL_GAIN)
     robot.drive(DRIVE_SPEED, steering) # Use line following again
     wait(10)
 
