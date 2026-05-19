@@ -39,7 +39,7 @@ while True:
     print(distance)
 
     # Too far -> move
-    if distance > TARGET_DISTANCE:
+    if distance < TARGET_DISTANCE < 600:
         robot.drive(MOVE_SPEED, 0)
 
     # Close enough -> stop
