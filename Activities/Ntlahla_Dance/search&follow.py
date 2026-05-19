@@ -8,81 +8,37 @@ from pybricks.tools import wait
 
 ev3 = EV3Brick()
 
-# Motors
 left_motor = Motor(Port.B)
 right_motor = Motor(Port.C)
 
 robot = DriveBase(left_motor, right_motor, 56, 121)
 
-# Sensors
 touch_sensor = TouchSensor(Port.S2)
 ultrasonic = UltrasonicSensor(Port.S4)
 
-# Settings
-TARGET_DISTANCE = 200   # 20 cm
-MOVE_SPEED = 120
+TARGET_DISTANCE = 250
+MAX_DISTANCE = 600
+MOVE_SPEED = 80
 
-ev3.speaker.say("Press to start")
+ev3.speaker.say("Press")
 
-# Wait for button
 while not touch_sensor.pressed():
     wait(10)
 
-wait(500)
-
+wait(700)
 ev3.speaker.say("Follow mode")
+
 while True:
-
     distance = ultrasonic.distance()
-
     print(distance)
 
-    # -------------------------
-    # FOLLOW TARGET
-    # -------------------------
-
-    if 250 < distance < SEARCH_LIMIT:
-
+    if TARGET_DISTANCE < distance < MAX_DISTANCE:
         robot.drive(MOVE_SPEED, 0)
 
-    # -------------------------
-    # TARGET REACHED
-    # -------------------------
-
-    elif distance <= 250 and distance > 0:
-
+    elif 0 < distance <= TARGET_DISTANCE:
         robot.stop()
-
-        # small wait prevents shaking/searching
-        wait(300)
-
-    # -------------------------
-    # SEARCH MODE
-    # -------------------------
 
     else:
-
         robot.stop()
 
-        # look left
-        robot.turn(-30)
-        wait(300)
-
-        distance = ultrasonic.distance()
-
-        if distance < SEARCH_LIMIT:
-            continue
-
-        # look right
-        robot.turn(60)
-        wait(300)
-
-        distance = ultrasonic.distance()
-
-        if distance < SEARCH_LIMIT:
-            continue
-
-        # center again
-        robot.turn(-30)
-
-    wait(50)
+    wait(200)
