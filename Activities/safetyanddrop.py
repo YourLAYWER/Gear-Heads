@@ -98,7 +98,7 @@ robot.stop()#robot stops after 17.22 seconds
 # This runs only after the robot sees white and breaks the loop
 lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
 # Move back a set distance (e.g., 100mm)
-robot.straight(-10) 
+#robot.straight(-10) 
 
 # --- TURN right ---
 robot.turn(90)
