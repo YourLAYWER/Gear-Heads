@@ -30,9 +30,9 @@ gyro_sensor = GyroSensor(Port.S1)
 # SETTINGS
 # -------------------------
 
-TARGET_DISTANCE = 50
-MAX_DISTANCE = 600
-MOVE_SPEED = 80
+TARGET_DISTANCE = 80
+MAX_DISTANCE = 500
+MOVE_SPEED = 70
 
 press_count = 0
 follow_mode = False
@@ -129,7 +129,7 @@ def collect_items():
 
     drop_lift()
 
-    for count in range(3):
+    for count in range(1):
         push_release_tool()
 
     ev3.speaker.say("Return")
