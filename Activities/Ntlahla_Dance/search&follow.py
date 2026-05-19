@@ -18,8 +18,9 @@ robot = DriveBase(left_motor, right_motor, 56, 121)
 touch_sensor = TouchSensor(Port.S2)
 ultrasonic = UltrasonicSensor(Port.S4)
 
-# Distance limit (mm)
-STOP_DISTANCE = 200
+# Settings
+TARGET_DISTANCE = 200   # 20 cm
+MOVE_SPEED = 120
 
 ev3.speaker.say("Press to start")
 
@@ -29,10 +30,7 @@ while not touch_sensor.pressed():
 
 wait(500)
 
-ev3.speaker.say("Moving")
-
-# Start moving
-robot.drive(150, 0)
+ev3.speaker.say("Follow mode")
 
 while True:
 
@@ -40,13 +38,12 @@ while True:
 
     print(distance)
 
-    # Object detected close
-    if distance < STOP_DISTANCE:
+    # Too far -> move
+    if distance > TARGET_DISTANCE:
+        robot.drive(MOVE_SPEED, 0)
 
+    # Close enough -> stop
+    else:
         robot.stop()
-
-        ev3.speaker.say("Object")
-
-        break
 
     wait(50)
