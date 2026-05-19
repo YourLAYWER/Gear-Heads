@@ -69,7 +69,7 @@ wait(2000)
 # =============================================================================
 DRIVE_SPEED = 60       
 PROPORTIONAL_GAIN = 1.0#steering sensitivity
-RUN_TIME_MS = 19000
+RUN_TIME_MS = 19700
 ev3.speaker.beep()
 ev3.screen.clear()
 ev3.screen.draw_text(0, 50, "Following Line...")
@@ -101,7 +101,7 @@ lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
 #robot.straight(-10) 
 
 # --- TURN right ---
-robot.turn(90)
+robot.turn(45)
 #robot.straight(40)
 #robot.turn(90)
 #fresh_white = line_sensor.reflection()
