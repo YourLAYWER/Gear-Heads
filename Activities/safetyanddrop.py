@@ -106,9 +106,9 @@ robot.turn(80)
 #robot.turn(90)
 #fresh_white = line_sensor.reflection()
 #LEG2_THRESHOLD = (black_value + fresh_white) / 2
-while line_sensor.reflection() > TARGET_THRESHOLD:
-    robot.drive(0, 20) # Slow, precise rotation (speed 20)
-    wait(5)
+#while line_sensor.reflection() > TARGET_THRESHOLD:
+    #robot.drive(0, 20) # Slow, precise rotation (speed 20)
+    #wait(5)
 
 robot.stop()
 ev3.speaker.beep(600, 100)
