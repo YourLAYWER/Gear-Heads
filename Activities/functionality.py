@@ -16,7 +16,7 @@ LIFT_DOWN_ANGLE = 0    # The absolute angle representing the "down" position
 
 #Variables
 ev3 = EV3Brick()
-gyro = GyroSensor(Port.S1)
+#gyro = GyroSensor(Port.S1)
 touch = TouchSensor(Port.D)
 line_sensor = ColorSensor(Port.S3)
 lift_motor = Motor(Port.A)
