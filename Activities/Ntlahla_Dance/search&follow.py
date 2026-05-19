@@ -31,7 +31,6 @@ while not touch_sensor.pressed():
 wait(500)
 
 ev3.speaker.say("Follow mode")
-
 while True:
 
     distance = ultrasonic.distance()
@@ -42,17 +41,20 @@ while True:
     # FOLLOW TARGET
     # -------------------------
 
-    if TARGET_DISTANCE < distance < 600:
+    if 250 < distance < SEARCH_LIMIT:
 
         robot.drive(MOVE_SPEED, 0)
 
     # -------------------------
-    # TARGET CLOSE
+    # TARGET REACHED
     # -------------------------
 
-    elif distance <= TARGET_DISTANCE:
+    elif distance <= 250 and distance > 0:
 
         robot.stop()
+
+        # small wait prevents shaking/searching
+        wait(300)
 
     # -------------------------
     # SEARCH MODE
@@ -62,25 +64,25 @@ while True:
 
         robot.stop()
 
-        # Look left
+        # look left
         robot.turn(-30)
         wait(300)
 
         distance = ultrasonic.distance()
 
-        if TARGET_DISTANCE < distance < 600:
+        if distance < SEARCH_LIMIT:
             continue
 
-        # Look right
+        # look right
         robot.turn(60)
         wait(300)
 
         distance = ultrasonic.distance()
 
-        if TARGET_DISTANCE < distance < 600:
+        if distance < SEARCH_LIMIT:
             continue
 
-        # Return to center
+        # center again
         robot.turn(-30)
 
     wait(50)
