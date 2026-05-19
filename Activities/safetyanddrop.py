@@ -1,25 +1,5 @@
 #!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor, ColorSensor, GyroSensor
-from pybricks.parameters import Port
-from pybricks.robotics import DriveBase
-from pybricks.tools import wait,StopWatch
-
-# =============================================================================
-# 1. SETUP & INITIALIZATION
-# =============================================================================
-ev3 = EV3Brick()
-
-left_motor = Motor(Port.B)
-right_motor = Motor(Port.C)
-lift_motor = Motor(Port.A) 
-
-# Sensors
-line_sensor = ColorSensor(Port.S3)
-gyro = GyroSensor(Port.S1)
-=======
-#!/usr/bin/env pybricks-micropython
-from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, ColorSensor
 from pybricks.parameters import Port
 from pybricks.robotics import DriveBase
@@ -37,7 +17,6 @@ lift_motor = Motor(Port.A)
 # Sensors
 line_sensor = ColorSensor(Port.S3)
 #gyro = GyroSensor(Port.S1)
->>>>>>> dd95aeeeac47b139590dbb0d330c2a7f959847d2
 
 # Robot Dimensions (Wheel Diameter: 56mm, Axle Track: 121mm)
 robot = DriveBase(left_motor, right_motor, 56, 121)
@@ -89,7 +68,7 @@ wait(2000)
 # 4. INTEGRATED P-CONTROL LOOP
 # =============================================================================
 DRIVE_SPEED = 60       
-PROPORTIONAL_GAIN = 1.0#steering sensitivity
+PROPORTIONAL_GAIN = 1.4#steering sensitivity
 RUN_TIME_MS = 19900
 ev3.speaker.beep()
 ev3.screen.clear()
