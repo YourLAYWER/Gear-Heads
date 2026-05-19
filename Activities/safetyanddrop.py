@@ -8,7 +8,6 @@ from pybricks.tools import StopWatch, wait
 # 1. SETUP & INITIALIZATION
 # =============================================================================
 ev3 = EV3Brick()
-
 left_motor = Motor(Port.B)
 right_motor = Motor(Port.C)
 lift_motor = Motor(Port.A) 
