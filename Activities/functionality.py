@@ -218,7 +218,6 @@ distance_covered += 90
 wait(500)
 
 #Next block follows the line forward until the end.(Using color sensor)
-ev3.screen.clear()
 move(1100) 
 wait(500)
 
@@ -226,7 +225,7 @@ wait(500)
 turn(90)
 
 #Move back 
-move(-600)
+move(-650)
 wait(500)
 
 #Lower the bar 100% (Car drop off)
@@ -235,8 +234,8 @@ lift_down()
 
 
 #Follow the line to the end corner
-trip_two_distance = 0 #To be used as the new distance_covered variable
-move(-200)
+#trip_two_distance = 0 #To be used as the new distance_covered variable
+#move(-200)
 
 #Beep to indicate the end of the road
 celebrate()
