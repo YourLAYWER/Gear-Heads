@@ -195,7 +195,7 @@ wait(3000)
 ##INITIALISATION DONE
 
 #Move toward the car
-move(780)
+move(770)
 distance_covered += 900
 
 #Lower the bar 100% 
