@@ -69,7 +69,7 @@ wait(2000)
 # 4. INTEGRATED P-CONTROL LOOP
 # =============================================================================
 DRIVE_SPEED = 60      
-PROPORTIONAL_GAIN = 1.4#steering sensitivity
+PROPORTIONAL_GAIN = 1.2#steering sensitivity
 RUN_TIME_MS = 19900
 ev3.speaker.beep()
 ev3.screen.clear()
@@ -102,7 +102,7 @@ lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
 #robot.straight(-10) 
 
 # --- TURN right ---
-robot.turn(90)
+robot.turn(76)
 #robot.straight(40)
 #robot.turn(90)
 #fresh_white = line_sensor.reflection()
@@ -122,8 +122,6 @@ while timer.time() < RUN_TIME_MS:
     current_reflection = line_sensor.reflection()
     error = current_reflection - TARGET_THRESHOLD
     steering = (error * PROPORTIONAL_GAIN)
-    if error < 0:
-        steering -= 10#Turn left
     robot.drive(DRIVE_SPEED, steering) # Use line following again
     wait(10)
 
