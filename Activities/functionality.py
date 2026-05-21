@@ -201,7 +201,7 @@ lift_motor.reset_angle(0)
 lift_down()
 
 #Move toward the car
-touch_move()
+move(900)
 distance_covered += 900
 
 #Raise the bar 100%
