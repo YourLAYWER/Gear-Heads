@@ -69,7 +69,7 @@ wait(2000)
 # 4. INTEGRATED P-CONTROL LOOP
 # =============================================================================
 DRIVE_SPEED = 60      
-PROPORTIONAL_GAIN = 1.2#steering sensitivity
+PROPORTIONAL_GAIN = 1.1#steering sensitivity
 RUN_TIME_MS = 19900
 ev3.speaker.beep()
 ev3.screen.clear()
@@ -98,6 +98,7 @@ while True:
 robot.stop()#robot stops after 17.22 seconds
 # This runs only after the robot sees white and breaks the loop
 lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
+wait(10)
 # Move back a set distance (e.g., 100mm)
 #robot.straight(-10) 
 
