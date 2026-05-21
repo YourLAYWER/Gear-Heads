@@ -209,7 +209,7 @@ ev3.screen.draw_text(0, 30, "Raising The bar")
 lift_up()
 
 #Turn Towards the road
-turn(-35)
+turn(-45)
 distance_covered += 90
 # Brief pause to allow momentum to settle after turning
 wait(500)
