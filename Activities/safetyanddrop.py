@@ -69,7 +69,7 @@ wait(2000)
 # 4. INTEGRATED P-CONTROL LOOP
 # =============================================================================
 DRIVE_SPEED = 60      
-PROPORTIONAL_GAIN = 1.8#steering sensitivity
+PROPORTIONAL_GAIN = 1.1#steering sensitivity
 RUN_TIME_MS = 19900
 ev3.speaker.beep()
 ev3.screen.clear()
@@ -106,7 +106,7 @@ robot.turn(99)
 robot.straight(650)
 robot.turn(-90)
 robot.turn(25)
-robot.straight(350)
+robot.straight(450)
 robot.stop()
 #robot.turn(90)
 #fresh_white = line_sensor.reflection()
