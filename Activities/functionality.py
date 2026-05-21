@@ -209,14 +209,14 @@ ev3.screen.draw_text(0, 30, "Raising The bar")
 lift_up()
 
 #Turn Towards the road
-turn(-45)
+turn(-50)
 distance_covered += 90
 # Brief pause to allow momentum to settle after turning
 wait(500)
 
 #Next block follows the line forward until the end.(Using color sensor)
 ev3.screen.clear()
-move(900) 
+move(1100) 
 wait(500)
 
 #Lower the bar 100% (Car drop off)
@@ -231,7 +231,7 @@ turn(-45)
 
 #Follow the line to the end corner
 trip_two_distance = 0 #To be used as the new distance_covered variable
-move(200)
+move(500)
 
 #Beep to indicate the end of the road
 celebrate()
