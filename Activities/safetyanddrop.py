@@ -102,10 +102,10 @@ lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
 #robot.straight(-10) 
 
 # --- TURN right ---
-robot.turn(86)
+robot.turn(87)
 robot.straight(400)
 robot.turn(-90)
-robot.straight(400)
+robot.straight(900)
 robot.stop()
 #robot.turn(90)
 #fresh_white = line_sensor.reflection()
