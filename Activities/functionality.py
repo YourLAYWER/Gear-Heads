@@ -201,7 +201,7 @@ lift_motor.reset_angle(0)
 lift_down()
 
 #Move toward the car
-move(900)
+move(650)
 distance_covered += 900
 
 #Raise the bar 100%
@@ -209,14 +209,14 @@ ev3.screen.draw_text(0, 30, "Raising The bar")
 lift_up()
 
 #Turn Towards the road
-turn(-90)
+turn(-65)
 distance_covered += 90
 # Brief pause to allow momentum to settle after turning
 wait(500)
 
 #Next block follows the line forward until the end.(Using color sensor)
 ev3.screen.clear()
-color_move(distance_covered)
+move(1000) 
 wait(500)
 
 #Lower the bar 100% (Car drop off)
