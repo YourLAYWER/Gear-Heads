@@ -194,21 +194,23 @@ print("Calibration Complete. Threshold:", TARGET_THRESHOLD)
 wait(3000)
 ##INITIALISATION DONE
 
+#Move toward the car
+move(780)
+distance_covered += 900
+
 #Lower the bar 100% 
 ev3.screen.clear()
 ev3.screen.draw_text(0, 30, "Lowering the bar")
 lift_motor.reset_angle(0)
 lift_down()
 
-#Move toward the car
-move(780)
-distance_covered += 900
-
 #Raise the bar 100%
+ev3.screen.clear()
 ev3.screen.draw_text(0, 30, "Raising The bar")
 lift_up()
 
 #Turn Towards the road
+ev3.screen.clear()
 turn(-50)
 distance_covered += 90
 # Brief pause to allow momentum to settle after turning
@@ -219,15 +221,19 @@ ev3.screen.clear()
 move(1100) 
 wait(500)
 
+
+
+#Turn Left (45 Degrees)
+turn(75)
+
+#Move back 
+move(-600)
+wait(500)
+
 #Lower the bar 100% (Car drop off)
 ev3.screen.draw_text(0, 30, "Lowering the bar")
 lift_down()
 
-#Move back (Out of the way of the car)
-move(-100)
-wait(500)
-#Turn Left (45 Degrees)
-turn(-45)
 
 #Follow the line to the end corner
 trip_two_distance = 0 #To be used as the new distance_covered variable
