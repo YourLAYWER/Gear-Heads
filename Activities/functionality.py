@@ -211,6 +211,7 @@ lift_up()
 
 #Turn Towards the road
 ev3.screen.clear()
+ev3.screen.draw_text(0, 30, "Driving")
 turn(-50)
 distance_covered += 90
 # Brief pause to allow momentum to settle after turning
@@ -218,10 +219,8 @@ wait(500)
 
 #Next block follows the line forward until the end.(Using color sensor)
 ev3.screen.clear()
-move(1100) 
+move(1150) 
 wait(500)
-
-
 
 #Turn Left (45 Degrees)
 turn(75)
@@ -237,7 +236,7 @@ lift_down()
 
 #Follow the line to the end corner
 trip_two_distance = 0 #To be used as the new distance_covered variable
-move(500)
+move(-200)
 
 #Beep to indicate the end of the road
 celebrate()
