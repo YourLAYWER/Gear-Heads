@@ -102,10 +102,10 @@ lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
 #robot.straight(-10) 
 
 # --- TURN right ---
-robot.turn(98)
-robot.straight(2000)
+robot.turn(94)
+robot.straight(800)
 robot.turn(-90)
-robot.turn(40)
+robot.turn(30)
 robot.straight(900)
 robot.stop()
 #robot.turn(90)
