@@ -201,7 +201,7 @@ lift_motor.reset_angle(0)
 lift_down()
 
 #Move toward the car
-move(650)
+move(780)
 distance_covered += 900
 
 #Raise the bar 100%
@@ -216,7 +216,7 @@ wait(500)
 
 #Next block follows the line forward until the end.(Using color sensor)
 ev3.screen.clear()
-move(1000) 
+move(900) 
 wait(500)
 
 #Lower the bar 100% (Car drop off)
@@ -231,7 +231,7 @@ turn(-45)
 
 #Follow the line to the end corner
 trip_two_distance = 0 #To be used as the new distance_covered variable
-robot.drive(200, 0)
+move(200)
 
 #Beep to indicate the end of the road
 celebrate()
