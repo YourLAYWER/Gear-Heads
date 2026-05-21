@@ -219,11 +219,11 @@ wait(500)
 
 #Next block follows the line forward until the end.(Using color sensor)
 ev3.screen.clear()
-move(1150) 
+move(1100) 
 wait(500)
 
 #Turn Left (45 Degrees)
-turn(75)
+turn(90)
 
 #Move back 
 move(-600)
