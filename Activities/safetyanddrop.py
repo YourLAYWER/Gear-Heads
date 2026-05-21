@@ -103,7 +103,7 @@ lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
 
 # --- TURN right ---
 robot.turn(80)
-robot.straight(40)
+robot.straight(400)
 #robot.turn(90)
 #fresh_white = line_sensor.reflection()
 #LEG2_THRESHOLD = (black_value + fresh_white) / 2
