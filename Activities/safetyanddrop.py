@@ -69,7 +69,7 @@ wait(2000)
 # 4. INTEGRATED P-CONTROL LOOP
 # =============================================================================
 DRIVE_SPEED = 60      
-PROPORTIONAL_GAIN = 1.2#steering sensitivity
+PROPORTIONAL_GAIN = 1.3#steering sensitivity
 RUN_TIME_MS = 19900
 ev3.speaker.beep()
 ev3.screen.clear()
@@ -102,8 +102,8 @@ lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
 #robot.straight(-10) 
 
 # --- TURN right ---
-robot.turn(76)
-#robot.straight(40)
+robot.turn(80)
+robot.straight(40)
 #robot.turn(90)
 #fresh_white = line_sensor.reflection()
 #LEG2_THRESHOLD = (black_value + fresh_white) / 2
@@ -118,13 +118,13 @@ ev3.speaker.beep(600, 100)
 print("Final 17.22 second stretch...")
 timer.reset() # Reset the timer to start from 0 for the new move
 
-while timer.time() < RUN_TIME_MS:
-    current_reflection = line_sensor.reflection()
-    error = current_reflection - TARGET_THRESHOLD
-    steering = (error * PROPORTIONAL_GAIN)
-    robot.drive(DRIVE_SPEED, steering) # Use line following again
-    wait(10)
+#while timer.time() < RUN_TIME_MS:
+    #current_reflection = line_sensor.reflection()
+    #error = current_reflection - TARGET_THRESHOLD
+    #steering = (error * PROPORTIONAL_GAIN)
+    #robot.drive(DRIVE_SPEED, steering) # Use line following again
+    #wait(10)
 
 # CRITICAL: Stop immediately after the second 17.22 seconds
-robot.stop()
+#robot.stop()
 ev3.speaker.say("Mission complete")
