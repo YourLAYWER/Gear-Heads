@@ -102,9 +102,11 @@ lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
 #robot.straight(-10) 
 
 # --- TURN right ---
-robot.turn(83)
+robot.turn(86)
 robot.straight(400)
 robot.turn(-90)
+robot.straight(400)
+robot.stop()
 #robot.turn(90)
 #fresh_white = line_sensor.reflection()
 #LEG2_THRESHOLD = (black_value + fresh_white) / 2
@@ -113,11 +115,11 @@ robot.turn(-90)
     #wait(5)
 
 robot.stop()
-ev3.speaker.beep(600, 100)
+#ev3.speaker.beep(600, 100)
 
 # --- SECOND LINE FOLLOW (Same time as before) ---
-print("Final 17.22 second stretch...")
-timer.reset() # Reset the timer to start from 0 for the new move
+#print("Final 17.22 second stretch...")
+#timer.reset() # Reset the timer to start from 0 for the new move
 
 #while timer.time() < RUN_TIME_MS:
     #current_reflection = line_sensor.reflection()
