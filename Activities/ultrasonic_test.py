@@ -39,65 +39,65 @@ THRESHOLD = 5
 WIDTH = 400
 LENGTH = 450
 
-# def measure_grey():
-#     ev3.screen.clear()
-#     ev3.screen.draw_text(0,20, "Place on Black")
-#     ev3.screen.draw_text(0,50, "Press any button")
-#     while len(ev3.buttons.pressed()) == 0:
-#         wait(10)
+def measure_threshold():
+    ev3.screen.clear()
+    ev3.screen.draw_text(0,20, "Place on Black")
+    ev3.screen.draw_text(0,50, "Press any button")
+    while len(ev3.buttons.pressed()) == 0:
+        wait(10)
     
+    black_value = line_sensor.reflection()
+
+    ev3.screen.clear()
+    ev3.screen.draw_text(0,20, "Place on White")
+    ev3.screen.draw_text(0,50, "Press any button")
+    while len(ev3.buttons.pressed()) == 0:
+        wait(10)
+    
+    white_value = line_sensor.reflection()
+
+    #Calculating the grey area/ THRESHOLD
+    threshold_value = (black_value + white_value)/2
+
+    # Display results
+    ev3.screen.clear()
+    ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
+    ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
+    ev3.screen.draw_text(0, 60, "Thr: " + str(threshold_value))
+
+    return threshold_value
+
+# def calibrate():
+#     ev3.screen.clear()
+#     # Calibrate Black
+#     ev3.screen.draw_text(0, 10, "1. Place on BLACK")
+#     while not ev3.buttons.pressed(): wait(10)
 #     black = line_sensor.reflection()
+#     ev3.speaker.beep()
+#     while ev3.buttons.pressed(): wait(10)
 
+#     # Calibrate White
 #     ev3.screen.clear()
-#     ev3.screen.draw_text(0,20, "Place on White")
-#     ev3.screen.draw_text(0,50, "Press any button")
-#     while len(ev3.buttons.pressed()) == 0:
-#         wait(10)
-    
+#     ev3.screen.draw_text(0, 10, "2. Place on WHITE")
+#     while not ev3.buttons.pressed(): wait(10)
 #     white = line_sensor.reflection()
+#     ev3.speaker.beep()
+#     while ev3.buttons.pressed(): wait(10)
 
-#     #Calculating the grey area/ THRESHOLD
-#     value = (black+white)/2
-
-#     # Display results
+#     # Calculate threshold
+#     new_threshold = (black + white) / 2
+    
 #     ev3.screen.clear()
 #     ev3.screen.draw_text(0, 10, "Blk: " + str(black))
-#     ev3.screen.draw_text(0, 30, "Wht: " + str(white))
-#     ev3.screen.draw_text(0, 60, "Thr: " + str(value))
-
-#     return value
-
-def calibrate():
-    ev3.screen.clear()
-    # Calibrate Black
-    ev3.screen.draw_text(0, 10, "1. Place on BLACK")
-    while not ev3.buttons.pressed(): wait(10)
-    black = line_sensor.reflection()
-    ev3.speaker.beep()
-    while ev3.buttons.pressed(): wait(10)
-
-    # Calibrate White
-    ev3.screen.clear()
-    ev3.screen.draw_text(0, 10, "2. Place on WHITE")
-    while not ev3.buttons.pressed(): wait(10)
-    white = line_sensor.reflection()
-    ev3.speaker.beep()
-    while ev3.buttons.pressed(): wait(10)
-
-    # Calculate threshold
-    new_threshold = (black + white) / 2
+#     ev3.screen.draw_text(0, 25, "Wht: " + str(white))
+#     ev3.screen.draw_text(0, 45, "Thr: " + str(new_threshold))
+#     ev3.screen.draw_text(0, 70, "Press to START")
+#     while ev3.buttons.pressed(): wait(10)
     
-    ev3.screen.clear()
-    ev3.screen.draw_text(0, 10, "Blk: " + str(black))
-    ev3.screen.draw_text(0, 25, "Wht: " + str(white))
-    ev3.screen.draw_text(0, 45, "Thr: " + str(new_threshold))
-    ev3.screen.draw_text(0, 70, "Press to START")
-    while ev3.buttons.pressed(): wait(10)
-    
-    return new_threshold
+#     return new_threshold
 
 
-def arc_search(max_angle=180,speed=50):
+def arc_search(THRESHOLD,max_angle=180,speed=50):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Searching for line...")
@@ -121,15 +121,21 @@ def avoid_obstacle(width=200, length=300):
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Avoiding Obsticle...")
     robot.turn(90)
+    wait(100)
     robot.straight(width)
+    wait(100)
     robot.turn(-90)
+    wait(100)
     robot.straight(length)
+    wait(100)
     robot.turn(-90)
+    wait(100)
     robot.straight(width+(width*0.15))
+    wait(100)
     robot.turn(90)
-    wait(2000)
+    wait(1000)
     
-def drive_robot(max_speed=65):
+def drive_robot(THRESHOLD,max_speed=65):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Following Line...")
@@ -156,7 +162,7 @@ def drive_robot(max_speed=65):
                 ev3.speaker.say("Initiating Obsticle avoidance procedure")
                 avoid_obstacle()
                 wait(1000)
-                found = arc_search()
+                found = arc_search(THRESHOLD)
             
                 if not found:
                     robot.stop()
@@ -172,45 +178,47 @@ def drive_robot(max_speed=65):
         wait(10)
 
 ####################### this code is for calculating the THRESHOLD ##########################      
-ev3.screen.clear()
-ev3.screen.draw_text(0,20, "Place on Black")
-ev3.screen.draw_text(0,50, "Press any button")
-while len(ev3.buttons.pressed()) == 0:
-    wait(5)
+# ev3.screen.clear()
+# ev3.screen.draw_text(0,20, "Place on Black")
+# ev3.screen.draw_text(0,50, "Press any button")
+# while len(ev3.buttons.pressed()) == 0:
+#     wait(5)
     
-black_value = line_sensor.reflection()
+# black_value = line_sensor.reflection()
 
-while len(ev3.buttons.pressed()) > 0:
-    wait(10)
-ev3.speaker.beep()
+# while len(ev3.buttons.pressed()) > 0:
+#     wait(10)
+# ev3.speaker.beep()
 
 
-# measure white
-ev3.screen.clear()
-ev3.screen.draw_text(0, 20, "Place on WHITE")
-ev3.screen.draw_text(0, 50, "Press any btn")
-while len(ev3.buttons.pressed()) == 0:
-    wait(5)
+# # measure white
+# ev3.screen.clear()
+# ev3.screen.draw_text(0, 20, "Place on WHITE")
+# ev3.screen.draw_text(0, 50, "Press any btn")
+# while len(ev3.buttons.pressed()) == 0:
+#     wait(5)
 
-white_value = line_sensor.reflection()
+# white_value = line_sensor.reflection()
 
-while len(ev3.buttons.pressed()) > 0:
-    wait(10)
-ev3.speaker.beep()
+# while len(ev3.buttons.pressed()) > 0:
+#     wait(10)
+# ev3.speaker.beep()
 
-THRESHOLD = (black_value + white_value) / 2  
+# THRESHOLD = (black_value + white_value) / 2  
 
-# Display results
-ev3.screen.clear()
-ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
-ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
-ev3.screen.draw_text(0, 60, "Thr: " + str(THRESHOLD))
+# # Display results
+# ev3.screen.clear()
+# ev3.screen.draw_text(0, 10, "Blk: " + str(black_value))
+# ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
+# ev3.screen.draw_text(0, 60, "Thr: " + str(THRESHOLD))
 
-while len(ev3.buttons.pressed()) > 0:
-    wait(10)
-ev3.speaker.beep()
+# while len(ev3.buttons.pressed()) > 0:
+#     wait(10)
+# ev3.speaker.beep()
+
+THRESHOLD = measure_threshold()
 
 ev3.speaker.beep(1000, 200)  # end of THRESHOLD calculation
 print("calibration complete")
 wait(5)
-drive_robot()
+drive_robot(THRESHOLD)
