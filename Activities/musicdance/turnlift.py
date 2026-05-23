@@ -41,11 +41,12 @@ for i in range(5):#Repeat process 5 times
     # wait=False allows lifting and turning at the same time
     lift_motor.run_target(150, 110, wait=False)#Raise to 110 at 150 speed.
     
-    #(From turn_360.py)
-    robot.turn(360) 
+    robot.drive(0, 120) 
+    wait(3000) 
+    robot.stop() 
     
     #(Target 0 from lower.py)
-    lift_motor.run_target(150, 0)#Lower at 150 speed
+    lift_motor.run_target(150, 0, wait=True)#Lower at 150 speed
     
     # Pause for stability (From turn_360.py)
     wait(1000)
