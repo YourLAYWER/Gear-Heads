@@ -95,11 +95,25 @@ while True:
 # =============================================================================
 robot.stop()
 lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
-wait(100)
+wait(200)
 robot.turn(100)
 robot.straight(600)
 robot.turn(-90)
 robot.turn(25)
 robot.straight(600)
 robot.stop()
+ev3.screen.clear()
+ev3.screen.draw_text(0, 40, "DANCING!")
+lift_motor.reset_angle(0)#You are standing at angle 0. 
+for i in range(3):#Repeat process 3 times
+    # wait=False allows lifting and turning at the same time
+    lift_motor.run_target(150, 110, wait=False)#Raise to 110 at 150 speed.
+    robot.drive(0, 120) 
+    wait(3000) 
+    robot.stop() 
+    lift_motor.run_target(150, 0, wait=True)#Lower at 150 speed
+    # Pause for stability (From turn_360.py)
+    wait(1000)
+ev3.screen.clear()
+ev3.screen.draw_text(0, 40, "Mission complete!")
 ev3.speaker.say("Mission complete")
