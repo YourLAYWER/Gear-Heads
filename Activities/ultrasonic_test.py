@@ -22,8 +22,13 @@ ultrasonic = UltrasonicSensor(Port.S4)
 gyro_sensor = GyroSensor(Port.S1)
 
 ####################### Constants ############################
+<<<<<<< HEAD
 TARGET_DISTANCE = 80
 SPEED_GAIN = 1.8
+=======
+TARGET_DISTANCE = 150
+SPEED_GAIN = 1.2
+>>>>>>> abbf631d730df11e59b8b4a1d8cc27853265d1d5
 COLOR_GAIN = 0.8
 
 def measure_threshold():
