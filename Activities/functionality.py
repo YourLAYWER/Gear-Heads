@@ -195,7 +195,7 @@ wait(3000)
 ##INITIALISATION DONE'''
 
 #Move toward the car
-move(770)
+move(620)
 distance_covered += 900
 
 #Lower the bar 100% 
@@ -212,7 +212,7 @@ lift_up()
 #Turn Towards the road
 ev3.screen.clear()
 ev3.screen.draw_text(0, 30, "Driving")
-turn(-50)
+turn(-45)
 distance_covered += 90
 # Brief pause to allow momentum to settle after turning
 wait(500)
