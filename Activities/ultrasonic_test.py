@@ -22,7 +22,6 @@ ultrasonic = UltrasonicSensor(Port.S4)
 gyro_sensor = GyroSensor(Port.S1)
 
 ####################### Constants ############################
-<<<<<<< HEAD
 TARGET_DISTANCE = 80
 SPEED_GAIN = 1.8
 COLOR_GAIN = 0.8
