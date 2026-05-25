@@ -65,7 +65,7 @@ def measure_threshold():
     return threshold_value
 
 
-def arc_search(threshold_val, max_angle=180, speed=50):
+def arc_search(threshold_val, max_angle=180, speed=45):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Searching for line...")
