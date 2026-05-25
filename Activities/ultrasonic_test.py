@@ -25,10 +25,6 @@ gyro_sensor = GyroSensor(Port.S1)
 <<<<<<< HEAD
 TARGET_DISTANCE = 80
 SPEED_GAIN = 1.8
-=======
-TARGET_DISTANCE = 150
-SPEED_GAIN = 1.2
->>>>>>> abbf631d730df11e59b8b4a1d8cc27853265d1d5
 COLOR_GAIN = 0.8
 
 def measure_threshold():
@@ -93,7 +89,7 @@ def avoid_obstacle(width=200, length=300):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Avoiding Obstacle...")
-    robot.turn(70)
+    robot.turn(90)
     wait(100)
     robot.straight(width)
     wait(100)
