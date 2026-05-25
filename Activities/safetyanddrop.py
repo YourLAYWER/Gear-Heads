@@ -96,7 +96,7 @@ while True:
 robot.stop()
 lift_motor.run_target(100, 0) # Go back to 0 degrees (the floor),speed=150
 wait(2000)
-robot.turn(100)
+robot.turn(110)
 robot.straight(600)
 robot.turn(-90)
 robot.turn(25)
