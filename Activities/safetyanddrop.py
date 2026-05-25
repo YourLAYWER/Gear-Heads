@@ -16,8 +16,6 @@ lift_motor = Motor(Port.A)
 
 # Sensors
 line_sensor = ColorSensor(Port.S3)
-#gyro = GyroSensor(Port.S1)
-
 
 # Robot Dimensions (Wheel Diameter: 56mm, Axle Track: 121mm)
 robot = DriveBase(left_motor, right_motor, 56, 121)
@@ -95,41 +93,27 @@ while True:
 # =============================================================================
 # 5. FINAL DROP
 # =============================================================================
-robot.stop()#robot stops after 17.22 seconds
-# This runs only after the robot sees white and breaks the loop
+robot.stop()
 lift_motor.run_target(150, 0) # Go back to 0 degrees (the floor),speed=150
-wait(10)
-# Move back a set distance (e.g., 100mm)
-#robot.straight(-10) 
-
-# --- TURN right ---
+wait(200)
 robot.turn(100)
 robot.straight(600)
 robot.turn(-90)
 robot.turn(25)
 robot.straight(600)
 robot.stop()
-#robot.turn(90)
-#fresh_white = line_sensor.reflection()
-#LEG2_THRESHOLD = (black_value + fresh_white) / 2
-#while line_sensor.reflection() > TARGET_THRESHOLD:
-    #robot.drive(0, 20) # Slow, precise rotation (speed 20)
-    #wait(5)
-
-robot.stop()
-#ev3.speaker.beep(600, 100)
-
-# --- SECOND LINE FOLLOW (Same time as before) ---
-#print("Final 17.22 second stretch...")
-#timer.reset() # Reset the timer to start from 0 for the new move
-
-#while timer.time() < RUN_TIME_MS:
-    #current_reflection = line_sensor.reflection()
-    #error = current_reflection - TARGET_THRESHOLD
-    #steering = (error * PROPORTIONAL_GAIN)
-    #robot.drive(DRIVE_SPEED, steering) # Use line following again
-    #wait(10)
-
-# CRITICAL: Stop immediately after the second 17.22 seconds
-#robot.stop()
+ev3.screen.clear()
+ev3.screen.draw_text(0, 40, "DANCING!")
+lift_motor.reset_angle(0)#You are standing at angle 0. 
+for i in range(3):#Repeat process 3 times
+    # wait=False allows lifting and turning at the same time
+    lift_motor.run_target(150, 110, wait=False)#Raise to 110 at 150 speed.
+    robot.drive(0, 120) 
+    wait(3000) 
+    robot.stop() 
+    lift_motor.run_target(150, 0, wait=True)#Lower at 150 speed
+    # Pause for stability (From turn_360.py)
+    wait(1000)
+ev3.screen.clear()
+ev3.screen.draw_text(0, 40, "Mission complete!")
 ev3.speaker.say("Mission complete")
