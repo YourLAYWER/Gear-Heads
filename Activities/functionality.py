@@ -156,7 +156,7 @@ def touch_move():
             wait(10) # Check every 10ms, do nothing until False.
 
 ##INITIALISATION STARTS
-#Set Black
+'''#Set Black
 ev3.screen.clear()
 ev3.screen.draw_text(0, 20, "Place on BLACK")
 ev3.screen.draw_text(0, 50, "Press any btn") 
@@ -192,7 +192,7 @@ ev3.screen.draw_text(0, 30, "Wht: " + str(white_value))
 ev3.screen.draw_text(0, 60, "Thr: " + str(TARGET_THRESHOLD)) 
 print("Calibration Complete. Threshold:", TARGET_THRESHOLD)
 wait(3000)
-##INITIALISATION DONE
+##INITIALISATION DONE'''
 
 #Move toward the car
 move(770)
@@ -221,25 +221,22 @@ wait(500)
 move(1100) 
 wait(500)
 
-#Turn Left (45 Degrees)
+#Turn Right (90 Degrees)
 turn(90)
 
 #Move back 
-move(-650)
+move(-680)
 wait(500)
 
 #Lower the bar 100% (Car drop off)
 ev3.screen.draw_text(0, 30, "Lowering the bar")
 lift_down()
 
-
-#Follow the line to the end corner
-#trip_two_distance = 0 #To be used as the new distance_covered variable
-#move(-200)
-
 #Beep to indicate the end of the road
+ev3.screen.clear()
+ev3.screen.draw_text(0, 30, "Drop Off Complete!")
 celebrate()
-
+ev3.screen.clear()
 
 
 
