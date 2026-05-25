@@ -104,7 +104,7 @@ def avoid_obstacle(width=200, length=300):
     wait(1000)
     
     
-def drive_robot(threshold_val, target_distance, color_gain, speed_gain, max_speed=150):
+def drive_robot(threshold_val, target_distance, color_gain, speed_gain, max_speed=50):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Following Line...")
