@@ -23,7 +23,7 @@ gyro_sensor = GyroSensor(Port.S1)
 
 ####################### Constants ############################
 TARGET_DISTANCE = 150
-SPEED_GAIN = 1.8
+SPEED_GAIN = 1.2
 COLOR_GAIN = 0.8
 
 def measure_threshold():
