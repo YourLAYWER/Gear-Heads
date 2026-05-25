@@ -22,14 +22,9 @@ ultrasonic = UltrasonicSensor(Port.S4)
 gyro_sensor = GyroSensor(Port.S1)
 
 ####################### Constants ############################
-<<<<<<< HEAD
 TARGET_DISTANCE = 80
 SPEED_GAIN = 1.8
-=======
-TARGET_DISTANCE = 150
-SPEED_GAIN = 1.2
->>>>>>> abbf631d730df11e59b8b4a1d8cc27853265d1d5
-COLOR_GAIN = 0.8
+COLOR_GAIN = 1.2
 
 def measure_threshold():
     ev3.screen.clear()
@@ -93,7 +88,7 @@ def avoid_obstacle(width=200, length=300):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Avoiding Obstacle...")
-    robot.turn(70)
+    robot.turn(90)
     wait(100)
     robot.straight(width)
     wait(100)
@@ -109,7 +104,7 @@ def avoid_obstacle(width=200, length=300):
     wait(1000)
     
     
-def drive_robot(threshold_val, target_distance, color_gain, speed_gain, max_speed=80):
+def drive_robot(threshold_val, target_distance, color_gain, speed_gain, max_speed=45):
     ev3.speaker.beep()
     ev3.screen.clear()
     ev3.screen.draw_text(0, 50, "Following Line...")
